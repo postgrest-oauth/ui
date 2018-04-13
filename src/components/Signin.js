@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { TextField, Button } from 'material-ui';
 import { Link } from 'react-router-dom';
 
+const queryString = require('query-string');
+const parsed = queryString.parse(window.location.search);
+
 export default class Signin extends Component {
   constructor(props) {
     super(props);
@@ -26,10 +29,10 @@ export default class Signin extends Component {
 
   submitForm() {
     let options = { method: "post" }
-    fetch('/ui/signin?response_type=code&client_id={client_id}&state={state}&redirect_uri={redirect_uri}', options)
+    fetch(`${process.env.REACT_APP_OAUTH_URL}/signin`, options)
       .then((response) => {
           if ( response.ok ) {
-            window.location.replace('/ui/authorize?response_type=code&client_id={client_id}&state={state}&redirect_uri={redirect_uri}')
+            window.location.replace(`${process.env.REACT_APP_OAUTH_URL}/authorize?response_type=code&client_id=${parsed.client_id}&state=${parsed.state}&redirect_uri=${parsed.redirect_uri}`)
           } else {
             this.setState({ text: "Something went wrong :(" });
           }

@@ -27,7 +27,7 @@ export default class PasswordRequest extends Component {
 
   submitForm() {
     let options = { method: "post" }
-    fetch('/ui/password/request', options)
+    fetch(`${process.env.REACT_APP_OAUTH_URL}/password/reset`, options)
       .then((response) => {
           if ( response.ok ) {
             this.setState({ isLoaded: true });

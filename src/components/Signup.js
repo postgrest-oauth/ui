@@ -39,7 +39,7 @@ export default class Signup extends Component {
 
   submitForm() {
     let options = { method: "post" }
-    fetch('/ui/signup?response_type=code&client_id={client_id}&state={state}&redirect_uri={redirect_uri}', options)
+    fetch(`${process.env.REACT_APP_OAUTH_URL}/signup`, options)
       .then((response) => {
           if ( response.ok ) {
             this.setState({ isLoaded: true });

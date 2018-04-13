@@ -22,7 +22,7 @@ export default class Verify extends Component {
 
   submitForm() {
     let options = { method: "post" }
-    fetch('/ui/verify', options)
+    fetch(`${process.env.REACT_APP_OAUTH_URL}/verify`, options)
       .then((response) => {
           if ( response.ok ) {
             this.setState({ text: "Success! :)", textColor: "green" });

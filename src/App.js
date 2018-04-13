@@ -10,7 +10,7 @@ export default class App extends Component {
   render() {
     return (
       <Grid container style={{paddingTop:"120px", justifyContent:"center"}}>
-        <Router basename="/ui">
+        <Router>
           <Card raised = {true} style = {{ width: "420px", padding: "20px 50px" }}>
             <Switch>
               <Route exact path="/signin" component={Login}/>
