@@ -8,9 +8,10 @@ export default class PasswordRequest extends Component {
     this.state = {
       text: "",
       isLoaded: false,
-      inputValue: false,
+      inputValue: "",
+      input: false,
       isDisabled: () => { 
-        if (this.state.inputValue === false) {
+        if (this.state.input === false) {
           return true
         } else {
           return false
@@ -22,23 +23,26 @@ export default class PasswordRequest extends Component {
   };
 
   submitForm() {
-    let options = { method: "post" }
-    fetch(`${process.env.REACT_APP_OAUTH_URL}/password/request`, options)
-      .then((response) => {
-          if ( response.ok ) {
-            this.setState({ isLoaded: true });
-          } else {
-            this.setState({ text: "Something went wrong :(" });
-          }
-        }
-      )
-  }
+    let xhr = new XMLHttpRequest(),
+        body = `username=${this.state.inputValue}`;
+    xhr.open('POST', `${process.env.REACT_APP_OAUTH_URL}/password/request`, true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send(body);
+    xhr.onload = () => { 
+      if ( xhr.status >= 200 && xhr.status < 300 ) {
+        this.setState({ isLoaded: true });
+      } else {
+        this.setState({ text: "Something went wrong :(" });
+      }
+    };
+  };
 
   changeInput = (e) => {
+    this.setState({ inputValue: e.target.value });
     if ( e.target.value.length > 0 ) {
-      this.setState({ inputValue: true })
+      this.setState({ input: true })
     } else {
-      this.setState({ inputValue: false })
+      this.setState({ input: false })
     }
   };
   

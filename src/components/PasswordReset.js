@@ -8,12 +8,14 @@ export default class PasswordRequest extends Component {
     this.state = {
       text: "",
       isLoaded: false,
-      codeValue: false,
-      passwordValue: false,
+      codeValue: "",
+      passwordValue: "",
+      code: false,
+      password: false,
       isDisabled: () => { 
-        if (this.state.codeValue === false) {
+        if (this.state.code === false) {
           return true
-        } else if (this.state.passwordValue === false) {
+        } else if (this.state.password === false) {
           return true
         } else {
           return false
@@ -26,31 +28,35 @@ export default class PasswordRequest extends Component {
   };
 
   submitForm() {
-    let options = { method: "post" }
-    fetch(`${process.env.REACT_APP_OAUTH_URL}/password/reset`, options)
-      .then((response) => {
-          if ( response.ok ) {
-            this.setState({ isLoaded: true });
-          } else {
-            this.setState({ text: "Something went wrong :(" });
-          }
-        }
-      )
-  }
+    let xhr = new XMLHttpRequest(),
+        body = `code=${this.state.codeValue}&password=${this.state.passwordValue}`;
+    xhr.open('POST', `${process.env.REACT_APP_OAUTH_URL}/password/reset`, true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send(body);
+    xhr.onload = () => { 
+      if ( xhr.status >= 200 && xhr.status < 300 ) {
+        this.setState({ isLoaded: true });
+      } else {
+        this.setState({ text: "Something went wrong :(" });
+      }
+    };
+  };
   
   changeCode = (e) => {
+    this.setState({ codeValue: e.target.value });
     if ( e.target.value.length > 0 ) {
-      this.setState({ codeValue: true })
+      this.setState({ code: true })
     } else {
-      this.setState({ codeValue: false })
+      this.setState({ code: false })
     }
   };
 
   changePassword = (e) => {
+    this.setState({ passwordValue: e.target.value });
     if ( e.target.value.length > 0 ) {
-      this.setState({ passwordValue: true })
+      this.setState({ password: true })
     } else {
-      this.setState({ passwordValue: false })
+      this.setState({ password: false })
     }
   };
 	
