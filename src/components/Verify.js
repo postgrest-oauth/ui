@@ -7,9 +7,10 @@ export default class Verify extends Component {
     this.state = {
       text: "",
       textColor: "",
-      codeValue: false,
+      codeValue: "",
+      code: false,
       isDisabled: () => { 
-        if (this.state.codeValue === false) {
+        if (this.state.code === false) {
           return true
         } else {
           return false
@@ -21,23 +22,26 @@ export default class Verify extends Component {
   };
 
   submitForm() {
-    let options = { method: "post" }
-    fetch('/ui/verify', options)
-      .then((response) => {
-          if ( response.ok ) {
-            this.setState({ text: "Success! :)", textColor: "green" });
-          } else {
-            this.setState({ text: "Something went wrong :(", textColor: "red" });
-          }
-        }
-      )
-  }
+    let xhr = new XMLHttpRequest(),
+        body = `code=${this.state.codeValue}`;
+    xhr.open('POST', `${process.env.REACT_APP_OAUTH_URL}/verify`, true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send(body);
+    xhr.onload = () => { 
+      if ( xhr.status >= 200 && xhr.status < 300 ) {
+        this.setState({ text: "Success! :)", textColor: "green" });
+      } else {
+        this.setState({ text: "Something went wrong :(", textColor: "red" });
+      }
+    };
+  };
 
   changeCode = (e) => {
+    this.setState({ codeValue: e.target.value });
     if ( e.target.value.length > 0 ) {
-      this.setState({ codeValue: true })
+      this.setState({ code: true })
     } else {
-      this.setState({ codeValue: false })
+      this.setState({ code: false })
     }
   };
 

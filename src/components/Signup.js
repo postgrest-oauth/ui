@@ -3,11 +3,14 @@ import { TextField, Button, FormControl, Input, InputLabel } from 'material-ui';
 import MaskedInput from 'react-text-mask';
 import { Redirect } from 'react-router-dom';
 
-function InputMask() {
+function InputMask(props) {
+  const { inputRef, ...other } = props;
   return (
     <MaskedInput
+      {...other}
       mask={['+',/\d/,/\d/,/\d/,' ','(',/\d/,/\d/,')',' ',/\d/,/\d/,/\d/,'-',/\d/,/\d/,'-',/\d/,/\d/]}
       placeholder="+123 (45) 678-90-12"
+      ref={inputRef}
       guide={false}
       style={{ border:"none", width:"100%", outline:"none", fontFamily:"Roboto", fontSize:"16px", padding:"5px 0" }}
     />
@@ -20,12 +23,18 @@ export default class Signup extends Component {
     this.state = {
       text: "",
       isLoaded: false,
-      emailValue: false,
-      passwordValue: false,
+      emailValue: "",
+      passwordValue: "",
+      phoneValue: "",
+      email: false,
+      password: false,
+      phone: false,
       isDisabled: () => { 
-        if (this.state.emailValue === false) {
+        if (this.state.email === false) {
           return true
-        } else if (this.state.passwordValue === false) {
+        } else if (this.state.password === false) {
+          return true
+        } else if (this.state.phone === false) {
           return true
         } else {
           return false
@@ -35,34 +44,48 @@ export default class Signup extends Component {
     this.submitForm = this.submitForm.bind(this);
     this.changeEmail = this.changeEmail.bind(this);
     this.changePassword = this.changePassword.bind(this);
+    this.changePhone = this.changePhone.bind(this);
   };
 
   submitForm() {
-    let options = { method: "post" }
-    fetch('/ui/signup?response_type=code&client_id={client_id}&state={state}&redirect_uri={redirect_uri}', options)
-      .then((response) => {
-          if ( response.ok ) {
-            this.setState({ isLoaded: true });
-          } else {
-            this.setState({ text: "Something went wrong :(" });
-          }
-        }
-      )
-  }
+    let xhr = new XMLHttpRequest(),
+        body = `email=${this.state.emailValue}&password=${this.state.passwordValue}&phone=${this.state.phoneValue}`;
+    xhr.open('POST', `${process.env.REACT_APP_OAUTH_URL}/signup`, true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send(body);
+    xhr.onload = () => { 
+      if ( xhr.status >= 200 && xhr.status < 300 ) {
+        this.setState({ isLoaded: true });
+      } else {
+        this.setState({ text: "Something went wrong :(" });
+      }
+    };
+  };
 
   changeEmail = (e) => {
+    this.setState({ emailValue: e.target.value });
     if ( e.target.value.length > 0 ) {
-      this.setState({ emailValue: true })
+      this.setState({ email: true })
     } else {
-      this.setState({ emailValue: false })
+      this.setState({ email: false })
     }
   };
 
   changePassword = (e) => {
+    this.setState({ passwordValue: e.target.value });
     if ( e.target.value.length > 0 ) {
-      this.setState({ passwordValue: true })
+      this.setState({ password: true })
     } else {
-      this.setState({ passwordValue: false })
+      this.setState({ password: false })
+    }
+  };
+
+  changePhone = (e) => {
+    this.setState({ phoneValue: e.target.value });
+    if ( e.target.value.length > 18 ) {
+      this.setState({ phone: true })
+    } else {
+      this.setState({ phone: false })
     }
   };
 
@@ -73,7 +96,7 @@ export default class Signup extends Component {
         <TextField label="Password" margin="normal" type="password" onChange={this.changePassword} fullWidth />
         <FormControl margin="normal" fullWidth >
           <InputLabel shrink={true}> Phone number </InputLabel>
-          <Input inputComponent={InputMask} />
+          <Input onChange={this.changePhone} inputComponent={InputMask} />
         </FormControl>
         <span style={{ color: "red" }}>{this.state.text}</span>
         <Button 
