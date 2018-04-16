@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { TextField, Button, FormControl, Input, InputLabel } from 'material-ui';
 import MaskedInput from 'react-text-mask';
 import { Redirect } from 'react-router-dom';
+import 'whatwg-fetch';
 
 function InputMask(props) {
   const { inputRef, ...other } = props;
@@ -47,19 +48,23 @@ export default class Signup extends Component {
     this.changePhone = this.changePhone.bind(this);
   };
 
-  submitForm() {
-    let xhr = new XMLHttpRequest(),
-        body = `email=${this.state.emailValue}&password=${this.state.passwordValue}&phone=${this.state.phoneValue}`;
-    xhr.open('POST', `${process.env.REACT_APP_OAUTH_URL}/signup`, true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send(body);
-    xhr.onload = () => { 
-      if ( xhr.status >= 200 && xhr.status < 300 ) {
-        this.setState({ isLoaded: true });
-      } else {
-        this.setState({ text: "Something went wrong :(" });
-      }
-    };
+  submitForm = () => {
+    let options = {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: `email=${this.state.emailValue}&password=${this.state.passwordValue}&phone=${this.state.phoneValue}`
+        };
+
+    fetch(`${process.env.REACT_APP_OAUTH_URL}/signup`, options)
+      .then((response)=> {
+        if (response.status >= 200 && response.status < 300) {
+          this.setState({ isLoaded: true });
+        } else {
+          this.setState({ text: "Something went wrong :(" });
+        }
+      });
   };
 
   changeEmail = (e) => {

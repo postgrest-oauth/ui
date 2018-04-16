@@ -29,19 +29,24 @@ export default class Signin extends Component {
     this.changePassword = this.changePassword.bind(this);
   };
 
-  submitForm() {
-    let xhr = new XMLHttpRequest(),
-        body = `username=${this.state.usernameValue}&password=${this.state.passwordValue}`;
-    xhr.open('POST', `${process.env.REACT_APP_OAUTH_URL}/signin`, true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send(body);
-    xhr.onload = () => { 
-      if ( xhr.status >= 200 && xhr.status < 300 ) {
-        window.location.replace(`${process.env.REACT_APP_OAUTH_URL}/authorize?response_type=code&client_id=${parsed.client_id}&state=${parsed.state}&redirect_uri=${parsed.redirect_uri}`)
-      } else {
-        this.setState({ text: "Something went wrong :(" });
-      }
-    };
+  submitForm = () => {
+    let options = {
+          method: "POST",
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: `username=${this.state.usernameValue}&password=${this.state.passwordValue}`
+        };
+
+    fetch(`${process.env.REACT_APP_OAUTH_URL}/signin`, options)
+      .then((response)=> {
+        if (response.status >= 200 && response.status < 300) {
+          window.location.replace(`${process.env.REACT_APP_OAUTH_URL}/authorize?response_type=code&client_id=${parsed.client_id}&state=${parsed.state}&redirect_uri=${parsed.redirect_uri}`)
+        } else {
+          this.setState({ text: "Something went wrong :(" });
+        }
+      });
   };
 
   changeUsername = (e) => {

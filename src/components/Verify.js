@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { TextField, Button, Typography } from 'material-ui';
+import { Redirect } from 'react-router-dom';
 
 export default class Verify extends Component {
   constructor(props) {
     super(props);
     this.state = {
       text: "",
-      textColor: "",
+      isLoaded: false,
       codeValue: "",
       code: false,
       isDisabled: () => { 
@@ -21,19 +22,23 @@ export default class Verify extends Component {
     this.changeCode = this.changeCode.bind(this);
   };
 
-  submitForm() {
-    let xhr = new XMLHttpRequest(),
-        body = `code=${this.state.codeValue}`;
-    xhr.open('POST', `${process.env.REACT_APP_OAUTH_URL}/verify`, true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send(body);
-    xhr.onload = () => { 
-      if ( xhr.status >= 200 && xhr.status < 300 ) {
-        this.setState({ text: "Success! :)", textColor: "green" });
-      } else {
-        this.setState({ text: "Something went wrong :(", textColor: "red" });
-      }
-    };
+  submitForm = () => {
+    let options = {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: `code=${this.state.codeValue}`
+        };
+
+    fetch(`${process.env.REACT_APP_OAUTH_URL}/verify`, options)
+      .then((response)=> {
+        if (response.status >= 200 && response.status < 300) {
+          this.setState({ isLoaded: true });
+        } else {
+          this.setState({ text: "Something went wrong :(" });
+        }
+      });
   };
 
   changeCode = (e) => {
@@ -50,8 +55,8 @@ export default class Verify extends Component {
       <form className="form">
         <Typography>Please input verification code from email</Typography>
         <TextField label="Verification code" margin="normal" onChange={this.changeCode} fullWidth />
-        <span style={{ color: this.state.textColor }}>{this.state.text}</span>
-        <Button 
+        <span>{this.state.text}</span>
+        <Button
           variant="raised" 
           color="primary" 
           style={{ padding:"10px 30px", marginTop:"15px" }}
@@ -60,6 +65,7 @@ export default class Verify extends Component {
         >
           submit
         </Button>
+        { this.state.isLoaded ? <Redirect to="/signin" push/> : null }
       </form>
     )
   }

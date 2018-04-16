@@ -22,19 +22,23 @@ export default class PasswordRequest extends Component {
     this.changeInput = this.changeInput.bind(this);
   };
 
-  submitForm() {
-    let xhr = new XMLHttpRequest(),
-        body = `username=${this.state.inputValue}`;
-    xhr.open('POST', `${process.env.REACT_APP_OAUTH_URL}/password/request`, true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send(body);
-    xhr.onload = () => { 
-      if ( xhr.status >= 200 && xhr.status < 300 ) {
-        this.setState({ isLoaded: true });
-      } else {
-        this.setState({ text: "Something went wrong :(" });
-      }
-    };
+  submitForm = () => {
+    let options = {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: `username=${this.state.inputValue}`
+        };
+
+    fetch(`${process.env.REACT_APP_OAUTH_URL}/password/request`, options)
+      .then((response)=> {
+        if (response.status >= 200 && response.status < 300) {
+          this.setState({ isLoaded: true });
+        } else {
+          this.setState({ text: "Something went wrong :(" });
+        }
+      });
   };
 
   changeInput = (e) => {
