@@ -7,6 +7,7 @@ export default class Verify extends Component {
     super(props);
     this.state = {
       responseError: false,
+      errorText: "",
       codeError: false,
       codeValue: "",
       codeIsFull: false,
@@ -39,6 +40,7 @@ export default class Verify extends Component {
           this.setState({ isLoaded: true });
         } else {
           this.setState({ responseError: true });
+          this.setState({ errorText: "Something went wrong :(" });
         }
       });
   };
@@ -67,9 +69,10 @@ export default class Verify extends Component {
           onChange={this.changeCode} 
           onBlur={this.handleCodeError}
           error={this.state.codeError}
+          helperText={this.state.errorText}
+          FormHelperTextProps={{ error: this.state.responseError }}
           fullWidth 
         />
-        { this.state.responseError ? <span style={{ color: "red" }}>Something went wrong :(</span> : null }
         <Button
           variant="raised" 
           color="primary" 

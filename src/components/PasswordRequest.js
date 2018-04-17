@@ -7,6 +7,7 @@ export default class PasswordRequest extends Component {
     super(props);
     this.state = {
       responseError: false,
+      errorText: "",
       inputError: false,
       inputValue: "",
       inputIsFull: false,
@@ -39,6 +40,7 @@ export default class PasswordRequest extends Component {
           this.setState({ isLoaded: true });
         } else {
           this.setState({ responseError: true });
+          this.setState({ errorText: "Something went wrong :(" });
         }
       });
   };
@@ -66,9 +68,10 @@ export default class PasswordRequest extends Component {
           onChange={this.changeInput} 
           onBlur={this.handleInputError}
           error={this.state.inputError}
+          helperText={this.state.errorText}
+          FormHelperTextProps={{ error: this.state.responseError }}
           fullWidth 
         />
-        { this.state.responseError ? <span style={{ color: "red" }}>Something went wrong :(</span> : null }
 				<Button 
 					variant="raised" 
 					color="primary"

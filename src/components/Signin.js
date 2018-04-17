@@ -10,6 +10,7 @@ export default class Signin extends Component {
     super(props);
     this.state = {
       responseError: false,
+      errorText: "",
       usernameError: false,
       passwordError: false,
       usernameValue: "",
@@ -55,6 +56,7 @@ export default class Signin extends Component {
           window.location.assign(`${process.env.REACT_APP_OAUTH_URL}/authorize?${responseType}${clientId}${state}${redirectUri}`);
         } else {
           this.setState({ responseError: true });
+          this.setState({ errorText: "Something went wrong :(" });
         }
       });
   };
@@ -104,10 +106,11 @@ export default class Signin extends Component {
           type="password" 
           onChange={this.changePassword} 
           onBlur={this.handlePasswordError} 
-          error={this.state.passwordError} 
+          error={this.state.passwordError}
+          helperText={this.state.errorText}
+          FormHelperTextProps={{ error: this.state.responseError }}
           fullWidth 
         />
-        { this.state.responseError ? <span style={{ color: "red" }}>Something went wrong :(</span> : null }
         <Button 
           variant="raised" 
           color="primary" 

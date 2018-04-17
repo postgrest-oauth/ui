@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextField, Button, FormControl, Input, InputLabel } from 'material-ui';
+import { TextField, Button, FormControl, Input, InputLabel, FormHelperText } from 'material-ui';
 import MaskedInput from 'react-text-mask';
 import { Redirect } from 'react-router-dom';
 
@@ -22,6 +22,7 @@ export default class Signup extends Component {
     super(props);
     this.state = {
       responseError: false,
+      errorText: "",
       emailError: false,
       passwordError: false,
       phoneError: false,
@@ -68,6 +69,7 @@ export default class Signup extends Component {
           this.setState({ isLoaded: true });
         } else {
           this.setState({ responseError: true });
+          this.setState({ errorText: "Something went wrong :(" });
         }
       });
   };
@@ -137,8 +139,8 @@ export default class Signup extends Component {
         <FormControl margin="normal" error={this.state.phoneError} fullWidth >
           <InputLabel shrink={true}> Phone number </InputLabel>
           <Input onChange={this.changePhone} onBlur={this.handlePhoneError} inputComponent={InputMask} />
+          { this.state.responseError ? <FormHelperText error>{this.state.errorText}</FormHelperText> : null }
         </FormControl>
-        { this.state.responseError ? <span style={{ color: "red" }}>Something went wrong :(</span> : null }
         <Button 
           variant="raised"
           color="primary" 
