@@ -6,12 +6,13 @@ export default class PasswordRequest extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: "",
-      isLoaded: false,
+      responseError: false,
+      inputError: false,
       inputValue: "",
-      input: false,
+      inputIsFull: false,
+      isLoaded: false,
       isDisabled: () => { 
-        if (this.state.input === false) {
+        if (this.state.inputIsFull === false) {
           return true
         } else {
           return false
@@ -20,6 +21,7 @@ export default class PasswordRequest extends Component {
     };
     this.submitForm = this.submitForm.bind(this);
     this.changeInput = this.changeInput.bind(this);
+    this.handleInputError = this.handleInputError.bind(this);
   };
 
   submitForm = () => {
@@ -36,7 +38,7 @@ export default class PasswordRequest extends Component {
         if (response.status >= 200 && response.status < 300) {
           this.setState({ isLoaded: true });
         } else {
-          this.setState({ text: "Something went wrong :(" });
+          this.setState({ responseError: true });
         }
       });
   };
@@ -44,17 +46,29 @@ export default class PasswordRequest extends Component {
   changeInput = (e) => {
     this.setState({ inputValue: e.target.value });
     if ( e.target.value.length > 0 ) {
-      this.setState({ input: true })
+      this.setState({ inputIsFull: true })
+      this.setState({ inputError: false })
     } else {
-      this.setState({ input: false })
+      this.setState({ inputIsFull: false })
     }
+  };
+
+  handleInputError = (e) => {
+    if ( e.target.value.length < 1 ) { this.setState({ inputError: true }) }
   };
   
 	render() {
   	return (
     	<form className="form">
-				<TextField label="Email or phone" margin="normal" onChange={this.changeInput} fullWidth />
-        <span style={{ color: "red" }}>{this.state.text}</span>
+        <TextField 
+          label="Email or phone" 
+          margin="normal" 
+          onChange={this.changeInput} 
+          onBlur={this.handleInputError}
+          error={this.state.inputError}
+          fullWidth 
+        />
+        { this.state.responseError ? <span style={{ color: "red" }}>Something went wrong :(</span> : null }
 				<Button 
 					variant="raised" 
 					color="primary"

@@ -9,15 +9,17 @@ export default class Signin extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: "",
+      responseError: false,
+      usernameError: false,
+      passwordError: false,
       usernameValue: "",
       passwordValue: "",
-      username: false,
-      password: false,
+      usernameIsFull: false,
+      passwordIsFull: false,
       isDisabled: () => { 
-        if (this.state.username === false) {
+        if (this.state.usernameIsFull === false) {
           return true
-        } else if (this.state.password === false) {
+        } else if (this.state.passwordIsFull === false) {
           return true
         } else {
           return false
@@ -27,6 +29,8 @@ export default class Signin extends Component {
     this.submitForm = this.submitForm.bind(this);
     this.changeUsername = this.changeUsername.bind(this);
     this.changePassword = this.changePassword.bind(this);
+    this.handleUsernameError = this.handleUsernameError.bind(this);
+    this.handlePasswordError = this.handlePasswordError.bind(this);
   };
 
   submitForm = () => {
@@ -42,9 +46,9 @@ export default class Signin extends Component {
     fetch(`${process.env.REACT_APP_OAUTH_URL}/signin`, options)
       .then((response)=> {
         if (response.status >= 200 && response.status < 300) {
-          window.location.replace(`${process.env.REACT_APP_OAUTH_URL}/authorize?response_type=code&client_id=${parsed.client_id}&state=${parsed.state}&redirect_uri=${parsed.redirect_uri}`)
+          window.location.assign(`${process.env.REACT_APP_OAUTH_URL}/authorize?response_type=${parsed.response_type}&client_id=${parsed.client_id}`)
         } else {
-          this.setState({ text: "Something went wrong :(" });
+          this.setState({ responseError: true });
         }
       });
   };
@@ -52,27 +56,52 @@ export default class Signin extends Component {
   changeUsername = (e) => {
     this.setState({ usernameValue: e.target.value });
     if ( e.target.value.length > 0 ) {
-      this.setState({ username: true })
+      this.setState({ usernameIsFull: true })
+      this.setState({ usernameError: false })
     } else {
-      this.setState({ username: false })
+      this.setState({ usernameIsFull: false })
     }
   };
 
   changePassword = (e) => {
     this.setState({ passwordValue: e.target.value });
     if ( e.target.value.length > 0 ) {
-      this.setState({ password: true })
+      this.setState({ passwordIsFull: true })
+      this.setState({ passwordError: false })
     } else {
-      this.setState({ password: false })
+      this.setState({ passwordIsFull: false })
     }
+  };
+
+  handleUsernameError = (e) => {
+    if ( e.target.value.length < 1 ) { this.setState({ usernameError: true }) }
+  };
+
+  handlePasswordError = (e) => {
+    if ( e.target.value.length < 1 ) { this.setState({ passwordError: true }) }
   };
 
   render() {
     return (
-      <form className="form">
-        <TextField label="Username" margin="normal" onChange={this.changeUsername} fullWidth />
-        <TextField label="Password" margin="normal" onChange={this.changePassword} type="password" fullWidth />
-        <span style={{ color: "red" }}>{this.state.text}</span>
+      <div className="form">
+        <TextField 
+          label="Username" 
+          margin="normal" 
+          onChange={this.changeUsername} 
+          onBlur={this.handleUsernameError} 
+          error={this.state.usernameError} 
+          fullWidth 
+        />
+        <TextField 
+          label="Password" 
+          margin="normal" 
+          type="password" 
+          onChange={this.changePassword} 
+          onBlur={this.handlePasswordError} 
+          error={this.state.passwordError} 
+          fullWidth 
+        />
+        { this.state.responseError ? <span style={{ color: "red" }}>Something went wrong :(</span> : null }
         <Button 
           variant="raised" 
           color="primary" 
@@ -83,7 +112,7 @@ export default class Signin extends Component {
           submit
         </Button>
         <Link to="/password/request" className="forget-password-link"> Forgot your password? </Link>
-      </form>
+      </div>
     )
   }
 };
