@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { TextField, Button } from 'material-ui';
 import { Link } from 'react-router-dom';
 
-const queryString = require('query-string');
-const parsed = queryString.parse(window.location.search);
+const queryString = require('query-string'),
+      parsed = queryString.parse(window.location.search);
 
 export default class Signin extends Component {
   constructor(props) {
@@ -34,6 +34,7 @@ export default class Signin extends Component {
   };
 
   submitForm = () => {
+    let responseType, clientId, state, redirectUri;
     let options = {
           method: "POST",
           credentials: 'include',
@@ -43,10 +44,15 @@ export default class Signin extends Component {
           body: `username=${this.state.usernameValue}&password=${this.state.passwordValue}`
         };
 
+    parsed.response_type ? responseType=`response_type=${parsed.response_type}` : responseType="";
+    parsed.client_id ? clientId=`&client_id=${parsed.client_id}` : clientId="";
+    parsed.state ? state=`&state=${parsed.state}` : state="";
+    parsed.redirect_uri ? redirectUri=`&redirect_uri=${parsed.redirect_uri}` : redirectUri="";
+
     fetch(`${process.env.REACT_APP_OAUTH_URL}/signin`, options)
       .then((response)=> {
         if (response.status >= 200 && response.status < 300) {
-          window.location.assign(`${process.env.REACT_APP_OAUTH_URL}/authorize?response_type=${parsed.response_type}&client_id=${parsed.client_id}`)
+          window.location.assign(`${process.env.REACT_APP_OAUTH_URL}/authorize?${responseType}${clientId}${state}${redirectUri}`);
         } else {
           this.setState({ responseError: true });
         }
