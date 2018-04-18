@@ -72,7 +72,7 @@ export default class Signup extends Component {
           this.setState({ isLoaded: true });
         } else {
           this.setState({ responseError: true });
-          this.setState({ errorText: lng.errorMessage });
+          this.setState({ errorText: lng.signUpError });
         }
       });
   };

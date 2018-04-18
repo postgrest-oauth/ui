@@ -58,7 +58,7 @@ export default class Signin extends Component {
           window.location.assign(`${process.env.REACT_APP_OAUTH_URL}/authorize?${responseType}${clientId}${state}${redirectUri}`);
         } else {
           this.setState({ responseError: true });
-          this.setState({ errorText: lng.errorMessage });
+          this.setState({ errorText: lng.signInError });
         }
       });
   };

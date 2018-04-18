@@ -2,7 +2,10 @@
   "language" : {
     "signIn": "signin",
     "signUp": "signup",
-    "errorMessage": "Something went wrong :(",
+    "signInError": "Wrong username or password",
+    "signUpError": "User already exists",
+    "verifyError": "Wrong verification code",
+    "requestError": "Wrong email or phone",
     "submitButton": "submit",
     "usernameInput": "Username",
     "passwordInput": "Password",
