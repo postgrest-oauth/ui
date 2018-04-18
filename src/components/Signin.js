@@ -3,7 +3,9 @@ import { TextField, Button } from 'material-ui';
 import { Link } from 'react-router-dom';
 
 const queryString = require('query-string'),
-      parsed = queryString.parse(window.location.search);
+      parsed = queryString.parse(window.location.search),
+      json = require('../language.json'),
+      lng = json.language;
 
 export default class Signin extends Component {
   constructor(props) {
@@ -56,7 +58,7 @@ export default class Signin extends Component {
           window.location.assign(`${process.env.REACT_APP_OAUTH_URL}/authorize?${responseType}${clientId}${state}${redirectUri}`);
         } else {
           this.setState({ responseError: true });
-          this.setState({ errorText: "Something went wrong :(" });
+          this.setState({ errorText: lng.errorMessage });
         }
       });
   };
@@ -90,10 +92,11 @@ export default class Signin extends Component {
   };
 
   render() {
+    
     return (
       <div className="form">
         <TextField 
-          label="Username" 
+          label={lng.usernameInput} 
           margin="normal" 
           onChange={this.changeUsername} 
           onBlur={this.handleUsernameError} 
@@ -101,7 +104,7 @@ export default class Signin extends Component {
           fullWidth 
         />
         <TextField 
-          label="Password" 
+          label={lng.passwordInput}
           margin="normal" 
           type="password" 
           onChange={this.changePassword} 
@@ -118,9 +121,9 @@ export default class Signin extends Component {
           onClick={this.submitForm}
           disabled={this.state.isDisabled()}
         >
-          submit
+          {lng.submitButton}
         </Button>
-        <Link to="/password/request" className="forget-password-link"> Forgot your password? </Link>
+        <Link to="/password/request" className="forget-password-link">{lng.passwordResetLink}</Link>
       </div>
     )
   }

@@ -1,0 +1,17 @@
+{ 
+  "language" : {
+    "signIn": "signin",
+    "signUp": "signup",
+    "errorMessage": "Something went wrong :(",
+    "submitButton": "submit",
+    "usernameInput": "Username",
+    "passwordInput": "Password",
+    "passwordResetLink": "Forgot your password?",
+    "emailAddress": "Email address",
+    "phoneNumber": "Phone number",
+    "verifyMessage": "Please input verification code from email",
+    "verifyInput": "Verification code",
+    "passwordRequestInput": "Email or phone",
+    "newPasswordInput": "New password"
+  }
+}

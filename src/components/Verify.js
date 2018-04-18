@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { TextField, Button, Typography } from 'material-ui';
 import { Redirect } from 'react-router-dom';
 
+const json = require('../language.json'),
+      lng = json.language;
+
 export default class Verify extends Component {
   constructor(props) {
     super(props);
@@ -40,7 +43,7 @@ export default class Verify extends Component {
           this.setState({ isLoaded: true });
         } else {
           this.setState({ responseError: true });
-          this.setState({ errorText: "Something went wrong :(" });
+          this.setState({ errorText: lng.errorMessage });
         }
       });
   };
@@ -62,9 +65,9 @@ export default class Verify extends Component {
   render() {
     return(
       <div className="form">
-        <Typography>Please input verification code from email</Typography>
+        <Typography>{lng.verifyMessage}</Typography>
         <TextField 
-          label="Verification code" 
+          label={lng.verifyInput}
           margin="normal" 
           onChange={this.changeCode} 
           onBlur={this.handleCodeError}
@@ -80,7 +83,7 @@ export default class Verify extends Component {
           onClick={this.submitForm}
           disabled={this.state.isDisabled()}
         >
-          submit
+          {lng.submitButton}
         </Button>
         { this.state.isLoaded ? <Redirect to="/signin" push/> : null }
       </div>

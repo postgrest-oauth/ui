@@ -3,6 +3,9 @@ import { TextField, Button, FormControl, Input, InputLabel, FormHelperText } fro
 import MaskedInput from 'react-text-mask';
 import { Redirect } from 'react-router-dom';
 
+const json = require('../language.json'),
+      lng = json.language;
+
 function InputMask(props) {
   const { inputRef, ...other } = props;
   return (
@@ -69,7 +72,7 @@ export default class Signup extends Component {
           this.setState({ isLoaded: true });
         } else {
           this.setState({ responseError: true });
-          this.setState({ errorText: "Something went wrong :(" });
+          this.setState({ errorText: lng.errorMessage });
         }
       });
   };
@@ -120,7 +123,7 @@ export default class Signup extends Component {
     return (
       <div className="form">
         <TextField 
-          label="Email address" 
+          label={lng.emailAddress} 
           margin="normal" 
           onChange={this.changeEmail}
           onBlur={this.handleEmailError}
@@ -128,7 +131,7 @@ export default class Signup extends Component {
           fullWidth 
         />
         <TextField
-          label="Password" 
+          label={lng.passwordInput} 
           margin="normal" 
           type="password" 
           onChange={this.changePassword}
@@ -137,7 +140,7 @@ export default class Signup extends Component {
           fullWidth 
         />
         <FormControl margin="normal" error={this.state.phoneError} fullWidth >
-          <InputLabel shrink={true}> Phone number </InputLabel>
+          <InputLabel shrink={true}> {lng.phoneNumber} </InputLabel>
           <Input onChange={this.changePhone} onBlur={this.handlePhoneError} inputComponent={InputMask} />
           { this.state.responseError ? <FormHelperText error>{this.state.errorText}</FormHelperText> : null }
         </FormControl>
@@ -148,7 +151,7 @@ export default class Signup extends Component {
           onClick={this.submitForm}
           disabled={this.state.isDisabled()}
         >
-          submit
+          {lng.submitButton}
         </Button>
         { this.state.isLoaded ? <Redirect to="/verify" push/> : null } 
       </div>
