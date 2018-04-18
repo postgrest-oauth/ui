@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { TextField, Button, FormControl, Input, InputLabel } from 'material-ui';
+import { TextField, Button, FormControl, Input, InputLabel, FormHelperText } from 'material-ui';
 import MaskedInput from 'react-text-mask';
 import { Redirect } from 'react-router-dom';
-import 'whatwg-fetch';
 
 function InputMask(props) {
   const { inputRef, ...other } = props;
@@ -22,20 +21,24 @@ export default class Signup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: "",
-      isLoaded: false,
+      responseError: false,
+      errorText: "",
+      emailError: false,
+      passwordError: false,
+      phoneError: false,
       emailValue: "",
       passwordValue: "",
       phoneValue: "",
-      email: false,
-      password: false,
-      phone: false,
+      emailIsFull: false,
+      passwordIsFull: false,
+      phoneIsFull: false,
+      isLoaded: false,
       isDisabled: () => { 
-        if (this.state.email === false) {
+        if (this.state.emailIsFull === false) {
           return true
-        } else if (this.state.password === false) {
+        } else if (this.state.passwordIsFull === false) {
           return true
-        } else if (this.state.phone === false) {
+        } else if (this.state.phoneIsFull === false) {
           return true
         } else {
           return false
@@ -46,6 +49,9 @@ export default class Signup extends Component {
     this.changeEmail = this.changeEmail.bind(this);
     this.changePassword = this.changePassword.bind(this);
     this.changePhone = this.changePhone.bind(this);
+    this.handleEmailError = this.handleEmailError.bind(this);
+    this.handlePasswordError = this.handlePasswordError.bind(this);
+    this.handlePhoneError = this.handlePhoneError.bind(this);
   };
 
   submitForm = () => {
@@ -62,7 +68,8 @@ export default class Signup extends Component {
         if (response.status >= 200 && response.status < 300) {
           this.setState({ isLoaded: true });
         } else {
-          this.setState({ text: "Something went wrong :(" });
+          this.setState({ responseError: true });
+          this.setState({ errorText: "Something went wrong :(" });
         }
       });
   };
@@ -70,40 +77,70 @@ export default class Signup extends Component {
   changeEmail = (e) => {
     this.setState({ emailValue: e.target.value });
     if ( e.target.value.length > 0 ) {
-      this.setState({ email: true })
+      this.setState({ emailIsFull: true })
+      this.setState({ emailError: false })
     } else {
-      this.setState({ email: false })
+      this.setState({ emailIsFull: false })
     }
   };
 
   changePassword = (e) => {
     this.setState({ passwordValue: e.target.value });
     if ( e.target.value.length > 0 ) {
-      this.setState({ password: true })
+      this.setState({ passwordIsFull: true })
+      this.setState({ passwordError: false })
     } else {
-      this.setState({ password: false })
+      this.setState({ passwordIsFull: false })
     }
   };
 
   changePhone = (e) => {
     this.setState({ phoneValue: e.target.value });
     if ( e.target.value.length > 18 ) {
-      this.setState({ phone: true })
+      this.setState({ phoneIsFull: true })
+      this.setState({ phoneError: false })
     } else {
-      this.setState({ phone: false })
+      this.setState({ phoneIsFull: false })
     }
+  };
+
+  handleEmailError = (e) => {
+    if ( e.target.value.length < 1 ) { this.setState({ emailError: true }) }
+  };
+
+  handlePasswordError = (e) => {
+    if ( e.target.value.length < 1 ) { this.setState({ passwordError: true }) }
+  };
+
+  handlePhoneError = (e) => {
+    if ( e.target.value.length < 1 ) { this.setState({ phoneError: true }) }
   };
 
   render() {
     return (
-      <form className="form">
-        <TextField label="Email address" margin="normal" onChange={this.changeEmail} fullWidth />
-        <TextField label="Password" margin="normal" type="password" onChange={this.changePassword} fullWidth />
-        <FormControl margin="normal" fullWidth >
+      <div className="form">
+        <TextField 
+          label="Email address" 
+          margin="normal" 
+          onChange={this.changeEmail}
+          onBlur={this.handleEmailError}
+          error={this.state.emailError}
+          fullWidth 
+        />
+        <TextField
+          label="Password" 
+          margin="normal" 
+          type="password" 
+          onChange={this.changePassword}
+          onBlur={this.handlePasswordError}
+          error={this.state.passwordError}
+          fullWidth 
+        />
+        <FormControl margin="normal" error={this.state.phoneError} fullWidth >
           <InputLabel shrink={true}> Phone number </InputLabel>
-          <Input onChange={this.changePhone} inputComponent={InputMask} />
+          <Input onChange={this.changePhone} onBlur={this.handlePhoneError} inputComponent={InputMask} />
+          { this.state.responseError ? <FormHelperText error>{this.state.errorText}</FormHelperText> : null }
         </FormControl>
-        <span style={{ color: "red" }}>{this.state.text}</span>
         <Button 
           variant="raised"
           color="primary" 
@@ -114,7 +151,7 @@ export default class Signup extends Component {
           submit
         </Button>
         { this.state.isLoaded ? <Redirect to="/verify" push/> : null } 
-      </form>
+      </div>
     )
   }
 };

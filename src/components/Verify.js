@@ -6,12 +6,14 @@ export default class Verify extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: "",
-      isLoaded: false,
+      responseError: false,
+      errorText: "",
+      codeError: false,
       codeValue: "",
-      code: false,
+      codeIsFull: false,
+      isLoaded: false,
       isDisabled: () => { 
-        if (this.state.code === false) {
+        if (this.state.codeIsFull === false) {
           return true
         } else {
           return false
@@ -20,6 +22,7 @@ export default class Verify extends Component {
     };
     this.submitForm = this.submitForm.bind(this);
     this.changeCode = this.changeCode.bind(this);
+    this.handleCodeError = this.handleCodeError.bind(this);
   };
 
   submitForm = () => {
@@ -36,7 +39,8 @@ export default class Verify extends Component {
         if (response.status >= 200 && response.status < 300) {
           this.setState({ isLoaded: true });
         } else {
-          this.setState({ text: "Something went wrong :(" });
+          this.setState({ responseError: true });
+          this.setState({ errorText: "Something went wrong :(" });
         }
       });
   };
@@ -44,18 +48,31 @@ export default class Verify extends Component {
   changeCode = (e) => {
     this.setState({ codeValue: e.target.value });
     if ( e.target.value.length > 0 ) {
-      this.setState({ code: true })
+      this.setState({ codeIsFull: true })
+      this.setState({ codeError: false })
     } else {
-      this.setState({ code: false })
+      this.setState({ codeIsFull: false })
     }
   };
 
+  handleCodeError = (e) => {
+    if ( e.target.value.length < 1 ) { this.setState({ codeError: true }) }
+  }
+
   render() {
     return(
-      <form className="form">
+      <div className="form">
         <Typography>Please input verification code from email</Typography>
-        <TextField label="Verification code" margin="normal" onChange={this.changeCode} fullWidth />
-        <span>{this.state.text}</span>
+        <TextField 
+          label="Verification code" 
+          margin="normal" 
+          onChange={this.changeCode} 
+          onBlur={this.handleCodeError}
+          error={this.state.codeError}
+          helperText={this.state.errorText}
+          FormHelperTextProps={{ error: this.state.responseError }}
+          fullWidth 
+        />
         <Button
           variant="raised" 
           color="primary" 
@@ -66,7 +83,7 @@ export default class Verify extends Component {
           submit
         </Button>
         { this.state.isLoaded ? <Redirect to="/signin" push/> : null }
-      </form>
+      </div>
     )
   }
 };
