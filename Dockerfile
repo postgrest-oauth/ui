@@ -1,14 +1,16 @@
-FROM node:carbon as builder
-RUN mkdir /app
+FROM node:7.10
+
 WORKDIR /app
-COPY . .
 
-RUN yarn install --quiet
-RUN export REACT_APP_OAUTH_URL="__REACT_APP_OAUTH_URL_PLACEHOLDER__"; yarn build
+COPY ./public /app/public
+COPY ./src /app/src
+COPY ./package.json /app/
+COPY ./yarn.lock /app/
 
-FROM nginx:1.13.9
-COPY --from=builder /app/build /usr/share/nginx/html
-COPY --from=builder /app/run.sh /root/run.sh
+RUN yarn install && GENERATE_SOURCEMAP=false yarn build
 
-EXPOSE 80
+FROM nginx:1.12.2-alpine
+COPY --from=0 /app/build /usr/share/nginx/html
+COPY ./run.sh /root/
+COPY ./nginx.vh.default.conf /etc/nginx/conf.d/default.conf
 CMD /bin/sh /root/run.sh
