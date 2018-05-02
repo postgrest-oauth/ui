@@ -3,14 +3,13 @@ import { TextField, Button } from 'material-ui';
 import { Link } from 'react-router-dom';
 
 const queryString = require('query-string'),
-      parsed = queryString.parse(window.location.search),
-      json = require('../language.json'),
-      lng = json.language;
+      parsed = queryString.parse(window.location.search);
 
 export default class Signin extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      lng: this.props.language,
       responseError: false,
       errorText: "",
       usernameError: false,
@@ -58,7 +57,7 @@ export default class Signin extends Component {
           window.location.assign(`${process.env.REACT_APP_OAUTH_URL}/authorize?${responseType}${clientId}${state}${redirectUri}`);
         } else {
           this.setState({ responseError: true });
-          this.setState({ errorText: lng.signInError });
+          this.setState({ errorText: this.state.lng.signInError });
         }
       });
   };
@@ -92,11 +91,10 @@ export default class Signin extends Component {
   };
 
   render() {
-    
     return (
       <div className="form">
         <TextField 
-          label={lng.usernameInput} 
+          label={this.state.lng.usernameInput} 
           margin="normal" 
           onChange={this.changeUsername} 
           onBlur={this.handleUsernameError} 
@@ -104,7 +102,7 @@ export default class Signin extends Component {
           fullWidth 
         />
         <TextField 
-          label={lng.passwordInput}
+          label={this.state.lng.passwordInput}
           margin="normal" 
           type="password" 
           onChange={this.changePassword} 
@@ -121,9 +119,9 @@ export default class Signin extends Component {
           onClick={this.submitForm}
           disabled={this.state.isDisabled()}
         >
-          {lng.submitButton}
+          {this.state.lng.submitButton}
         </Button>
-        <Link to="/password/request" className="forget-password-link">{lng.passwordResetLink}</Link>
+        <Link to="/password/request" className="forget-password-link">{this.state.lng.passwordResetLink}</Link>
       </div>
     )
   }

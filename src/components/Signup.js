@@ -3,9 +3,6 @@ import { TextField, Button, FormControl, Input, InputLabel, FormHelperText } fro
 import MaskedInput from 'react-text-mask';
 import { Redirect } from 'react-router-dom';
 
-const json = require('../language.json'),
-      lng = json.language;
-
 function InputMask(props) {
   const { inputRef, ...other } = props;
   return (
@@ -24,6 +21,7 @@ export default class Signup extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      lng: this.props.language,
       responseError: false,
       errorText: "",
       emailError: false,
@@ -72,7 +70,7 @@ export default class Signup extends Component {
           this.setState({ isLoaded: true });
         } else {
           this.setState({ responseError: true });
-          this.setState({ errorText: lng.signUpError });
+          this.setState({ errorText: this.state.lng.signUpError });
         }
       });
   };
@@ -123,7 +121,7 @@ export default class Signup extends Component {
     return (
       <div className="form">
         <TextField 
-          label={lng.emailAddress} 
+          label={this.state.lng.emailAddress} 
           margin="normal" 
           onChange={this.changeEmail}
           onBlur={this.handleEmailError}
@@ -131,7 +129,7 @@ export default class Signup extends Component {
           fullWidth 
         />
         <TextField
-          label={lng.passwordInput} 
+          label={this.state.lng.passwordInput} 
           margin="normal" 
           type="password" 
           onChange={this.changePassword}
@@ -140,7 +138,7 @@ export default class Signup extends Component {
           fullWidth 
         />
         <FormControl margin="normal" error={this.state.phoneError} fullWidth >
-          <InputLabel shrink={true}> {lng.phoneNumber} </InputLabel>
+          <InputLabel shrink={true}> {this.state.lng.phoneNumber} </InputLabel>
           <Input onChange={this.changePhone} onBlur={this.handlePhoneError} inputComponent={InputMask} />
           { this.state.responseError ? <FormHelperText error>{this.state.errorText}</FormHelperText> : null }
         </FormControl>
@@ -151,7 +149,7 @@ export default class Signup extends Component {
           onClick={this.submitForm}
           disabled={this.state.isDisabled()}
         >
-          {lng.submitButton}
+          {this.state.lng.submitButton}
         </Button>
         { this.state.isLoaded ? <Redirect to="/verify" push/> : null } 
       </div>

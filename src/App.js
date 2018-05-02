@@ -13,10 +13,10 @@ export default class App extends Component {
         <Router>
           <Card raised = {true} style = {{ width: "420px", padding: "20px 50px" }}>
             <Switch>
-              <Route exact path="/signin" component={Login}/>
-              <Route path="/password/request" component={PasswordRequest}/>
-              <Route path="/password/reset" component={PasswordReset}/>
-              <Route path="/verify" component={Verify}/>
+              <Route exact path="/signin" render={()=> <Login language={this.props.language} /> } />
+              <Route path="/password/request" render={()=> <PasswordRequest language={this.props.language} />} />
+              <Route path="/password/reset" render={()=> <PasswordReset language={this.props.language} />} />
+              <Route path="/verify" render={()=> <Verify language={this.props.language} />} />
             </Switch>
           </Card>
         </Router>

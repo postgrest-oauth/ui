@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import { TextField, Button } from 'material-ui';
 import { Redirect } from 'react-router-dom';
 
-const json = require('../language.json'),
-      lng = json.language;
 
 export default class PasswordRequest extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      lng: this.props.language,
       responseError: false,
       errorText: "",
       inputError: false,
@@ -43,7 +42,7 @@ export default class PasswordRequest extends Component {
           this.setState({ isLoaded: true });
         } else {
           this.setState({ responseError: true });
-          this.setState({ errorText: lng.requestError });
+          this.setState({ errorText: this.state.lng.requestError });
         }
       });
   };
@@ -66,7 +65,7 @@ export default class PasswordRequest extends Component {
   	return (
     	<div className="form">
         <TextField 
-          label={lng.passwordRequestInput} 
+          label={this.state.lng.passwordRequestInput} 
           margin="normal" 
           onChange={this.changeInput} 
           onBlur={this.handleInputError}
@@ -82,7 +81,7 @@ export default class PasswordRequest extends Component {
           onClick={this.submitForm}
           disabled={this.state.isDisabled()}
 				>
-					{lng.submitButton}
+					{this.state.lng.submitButton}
 				</Button>
         { this.state.isLoaded ? <Redirect to="/password/reset" push/> : null }
 			</div>
