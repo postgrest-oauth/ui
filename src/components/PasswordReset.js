@@ -6,6 +6,7 @@ export default class PasswordRequest extends Component {
 	constructor(props) {
     super(props);
     this.state = {
+      lng: this.props.language,
       responseError: false,
       errorText: "",
       codeError: false,
@@ -47,7 +48,7 @@ export default class PasswordRequest extends Component {
           this.setState({ isLoaded: true });
         } else {
           this.setState({ responseError: true });
-          this.setState({ errorText: "Something went wrong :(" });
+          this.setState({ errorText: this.state.lng.verifyError });
         }
       });
   };
@@ -82,9 +83,9 @@ export default class PasswordRequest extends Component {
 	
 	render() {
   	return (
-    	<form className="form">
+    	<div className="form">
         <TextField 
-          label="Verification code" 
+          label={this.state.lng.verifyInput}
           margin="normal" 
           onChange={this.changeCode} 
           onBlur={this.handleCodeError}
@@ -92,7 +93,7 @@ export default class PasswordRequest extends Component {
           fullWidth 
         />
         <TextField 
-          label="New password" 
+          label={this.state.lng.newPasswordInput} 
           margin="normal" 
           type="password" 
           onChange={this.changePassword}
@@ -109,10 +110,10 @@ export default class PasswordRequest extends Component {
           onClick={this.submitForm}
           disabled={this.state.isDisabled()}
 				>
-					submit
+					{this.state.lng.submitButton}
 				</Button>
 				{ this.state.isLoaded ? <Redirect to="/signin" push/> : null }
-			</form>
+			</div>
     )
   }
 };

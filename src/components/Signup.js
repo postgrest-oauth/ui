@@ -21,6 +21,7 @@ export default class Signup extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      lng: this.props.language,
       responseError: false,
       errorText: "",
       emailError: false,
@@ -69,7 +70,7 @@ export default class Signup extends Component {
           this.setState({ isLoaded: true });
         } else {
           this.setState({ responseError: true });
-          this.setState({ errorText: "Something went wrong :(" });
+          this.setState({ errorText: this.state.lng.signUpError });
         }
       });
   };
@@ -120,7 +121,7 @@ export default class Signup extends Component {
     return (
       <div className="form">
         <TextField 
-          label="Email address" 
+          label={this.state.lng.emailAddress} 
           margin="normal" 
           onChange={this.changeEmail}
           onBlur={this.handleEmailError}
@@ -128,7 +129,7 @@ export default class Signup extends Component {
           fullWidth 
         />
         <TextField
-          label="Password" 
+          label={this.state.lng.passwordInput} 
           margin="normal" 
           type="password" 
           onChange={this.changePassword}
@@ -137,7 +138,7 @@ export default class Signup extends Component {
           fullWidth 
         />
         <FormControl margin="normal" error={this.state.phoneError} fullWidth >
-          <InputLabel shrink={true}> Phone number </InputLabel>
+          <InputLabel shrink={true}> {this.state.lng.phoneNumber} </InputLabel>
           <Input onChange={this.changePhone} onBlur={this.handlePhoneError} inputComponent={InputMask} />
           { this.state.responseError ? <FormHelperText error>{this.state.errorText}</FormHelperText> : null }
         </FormControl>
@@ -148,7 +149,7 @@ export default class Signup extends Component {
           onClick={this.submitForm}
           disabled={this.state.isDisabled()}
         >
-          submit
+          {this.state.lng.submitButton}
         </Button>
         { this.state.isLoaded ? <Redirect to="/verify" push/> : null } 
       </div>

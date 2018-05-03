@@ -6,6 +6,7 @@ export default class Verify extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      lng: this.props.language,
       responseError: false,
       errorText: "",
       codeError: false,
@@ -40,7 +41,7 @@ export default class Verify extends Component {
           this.setState({ isLoaded: true });
         } else {
           this.setState({ responseError: true });
-          this.setState({ errorText: "Something went wrong :(" });
+          this.setState({ errorText: this.state.lng.verifyError });
         }
       });
   };
@@ -62,9 +63,9 @@ export default class Verify extends Component {
   render() {
     return(
       <div className="form">
-        <Typography>Please input verification code from email</Typography>
+        <Typography>{this.state.lng.verifyMessage}</Typography>
         <TextField 
-          label="Verification code" 
+          label={this.state.lng.verifyInput}
           margin="normal" 
           onChange={this.changeCode} 
           onBlur={this.handleCodeError}
@@ -80,7 +81,7 @@ export default class Verify extends Component {
           onClick={this.submitForm}
           disabled={this.state.isDisabled()}
         >
-          submit
+          {this.state.lng.submitButton}
         </Button>
         { this.state.isLoaded ? <Redirect to="/signin" push/> : null }
       </div>

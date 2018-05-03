@@ -9,6 +9,7 @@ export default class Signin extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      lng: this.props.language,
       responseError: false,
       errorText: "",
       usernameError: false,
@@ -56,7 +57,7 @@ export default class Signin extends Component {
           window.location.assign(`${process.env.REACT_APP_OAUTH_URL}/authorize?${responseType}${clientId}${state}${redirectUri}`);
         } else {
           this.setState({ responseError: true });
-          this.setState({ errorText: "Something went wrong :(" });
+          this.setState({ errorText: this.state.lng.signInError });
         }
       });
   };
@@ -93,7 +94,7 @@ export default class Signin extends Component {
     return (
       <div className="form">
         <TextField 
-          label="Username" 
+          label={this.state.lng.usernameInput} 
           margin="normal" 
           onChange={this.changeUsername} 
           onBlur={this.handleUsernameError} 
@@ -101,7 +102,7 @@ export default class Signin extends Component {
           fullWidth 
         />
         <TextField 
-          label="Password" 
+          label={this.state.lng.passwordInput}
           margin="normal" 
           type="password" 
           onChange={this.changePassword} 
@@ -118,9 +119,9 @@ export default class Signin extends Component {
           onClick={this.submitForm}
           disabled={this.state.isDisabled()}
         >
-          submit
+          {this.state.lng.submitButton}
         </Button>
-        <Link to="/password/request" className="forget-password-link"> Forgot your password? </Link>
+        <Link to="/password/request" className="forget-password-link">{this.state.lng.passwordResetLink}</Link>
       </div>
     )
   }
