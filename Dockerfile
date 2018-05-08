@@ -7,7 +7,7 @@ COPY ./src /app/src
 COPY ./package.json /app/
 COPY ./yarn.lock /app/
 
-RUN yarn install && GENERATE_SOURCEMAP=false yarn build
+RUN yarn install && GENERATE_SOURCEMAP=false && export REACT_APP_OAUTH_URL="__REACT_APP_OAUTH_URL_PLACEHOLDER__" && yarn build
 
 FROM nginx:1.12.2-alpine
 COPY --from=0 /app/build /usr/share/nginx/html
