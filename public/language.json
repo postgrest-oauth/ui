@@ -1,5 +1,6 @@
 { 
   "language" : {
+    "documentTitle": "Sign In / Sign Up",
     "signInError": "Wrong username or password",
     "signUpError": "User already exists",
     "verifyError": "Wrong verification code",
