@@ -7,6 +7,11 @@ import PasswordReset from './components/PasswordReset';
 import Verify from './components/Verify';
 
 export default class App extends Component {
+
+  componentDidMount() {
+    document.title = this.props.language.documentTitle;
+  }
+
   render() {
     return (
       <Grid container style={{paddingTop:"120px", justifyContent:"center"}}>
