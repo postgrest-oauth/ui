@@ -54,7 +54,7 @@ export default class Signin extends Component {
     fetch(`${process.env.REACT_APP_OAUTH_URL}/signin`, options)
       .then((response)=> {
         if (response.status >= 200 && response.status < 300) {
-          window.location.assign(`${process.env.REACT_APP_OAUTH_URL}/authorize?${responseType}${clientId}${state}${redirectUri}`);
+          window.location.assign(`${process.env.REACT_APP_OAUTH_URL}/authorize?${responseType}${clientId}${state}${encodeURIComponent(redirectUri)}`);
         } else {
           this.setState({ responseError: true });
           this.setState({ errorText: this.state.lng.signInError });
