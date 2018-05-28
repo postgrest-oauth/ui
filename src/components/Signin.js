@@ -33,6 +33,7 @@ export default class Signin extends Component {
     this.changePassword = this.changePassword.bind(this);
     this.handleUsernameError = this.handleUsernameError.bind(this);
     this.handlePasswordError = this.handlePasswordError.bind(this);
+    this.pressEnter = this.pressEnter.bind(this);
   };
 
   submitForm = () => {
@@ -90,6 +91,12 @@ export default class Signin extends Component {
     if ( e.target.value.length < 1 ) { this.setState({ passwordError: true }) }
   };
 
+  pressEnter = (e) => {
+    if ( e.keyCode === 13 && this.state.usernameIsFull === true && this.state.passwordIsFull === true ) {
+      this.submitForm();
+    }
+  };
+
   render() {
     return (
       <div className="form">
@@ -98,6 +105,7 @@ export default class Signin extends Component {
           margin="normal" 
           onChange={this.changeUsername} 
           onBlur={this.handleUsernameError} 
+          onKeyDown={this.pressEnter}
           error={this.state.usernameError} 
           fullWidth 
         />
@@ -106,7 +114,8 @@ export default class Signin extends Component {
           margin="normal" 
           type="password" 
           onChange={this.changePassword} 
-          onBlur={this.handlePasswordError} 
+          onBlur={this.handlePasswordError}
+          onKeyDown={this.pressEnter}
           error={this.state.passwordError}
           helperText={this.state.errorText}
           FormHelperTextProps={{ error: this.state.responseError }}

@@ -53,6 +53,7 @@ export default class Signup extends Component {
     this.handleEmailError = this.handleEmailError.bind(this);
     this.handlePasswordError = this.handlePasswordError.bind(this);
     this.handlePhoneError = this.handlePhoneError.bind(this);
+    this.pressEnter = this.pressEnter.bind(this);
   };
 
   submitForm = () => {
@@ -117,6 +118,12 @@ export default class Signup extends Component {
     if ( e.target.value.length < 1 ) { this.setState({ phoneError: true }) }
   };
 
+  pressEnter = (e) => {
+    if ( e.keyCode === 13 && this.state.emailIsFull === true && this.state.passwordIsFull === true && this.state.phoneIsFull === true ) {
+      this.submitForm();
+    }
+  };
+
   render() {
     return (
       <div className="form">
@@ -125,6 +132,7 @@ export default class Signup extends Component {
           margin="normal" 
           onChange={this.changeEmail}
           onBlur={this.handleEmailError}
+          onKeyDown={this.pressEnter}
           error={this.state.emailError}
           fullWidth 
         />
@@ -134,12 +142,13 @@ export default class Signup extends Component {
           type="password" 
           onChange={this.changePassword}
           onBlur={this.handlePasswordError}
+          onKeyDown={this.pressEnter}
           error={this.state.passwordError}
           fullWidth 
         />
         <FormControl margin="normal" error={this.state.phoneError} fullWidth >
           <InputLabel shrink={true}> {this.state.lng.phoneNumber} </InputLabel>
-          <Input onChange={this.changePhone} onBlur={this.handlePhoneError} inputComponent={InputMask} />
+          <Input onChange={this.changePhone} onBlur={this.handlePhoneError} onKeyDown={this.pressEnter} inputComponent={InputMask} />
           { this.state.responseError ? <FormHelperText error>{this.state.errorText}</FormHelperText> : null }
         </FormControl>
         <Button 
