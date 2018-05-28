@@ -24,6 +24,7 @@ export default class Verify extends Component {
     this.submitForm = this.submitForm.bind(this);
     this.changeCode = this.changeCode.bind(this);
     this.handleCodeError = this.handleCodeError.bind(this);
+    this.pressEnter = this.pressEnter.bind(this);
   };
 
   submitForm = () => {
@@ -58,7 +59,13 @@ export default class Verify extends Component {
 
   handleCodeError = (e) => {
     if ( e.target.value.length < 1 ) { this.setState({ codeError: true }) }
-  }
+  };
+
+  pressEnter = (e) => {
+    if ( e.keyCode === 13 && this.state.codeIsFull === true ) {
+      this.submitForm();
+    }
+  };
 
   render() {
     return(
@@ -69,6 +76,7 @@ export default class Verify extends Component {
           margin="normal" 
           onChange={this.changeCode} 
           onBlur={this.handleCodeError}
+          onKeyDown={this.pressEnter}
           error={this.state.codeError}
           helperText={this.state.errorText}
           FormHelperTextProps={{ error: this.state.responseError }}

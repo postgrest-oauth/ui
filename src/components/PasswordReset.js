@@ -31,6 +31,7 @@ export default class PasswordRequest extends Component {
     this.changePassword = this.changePassword.bind(this);
     this.handleCodeError = this.handleCodeError.bind(this);
     this.handlePasswordError = this.handlePasswordError.bind(this);
+    this.pressEnter = this.pressEnter.bind(this);
   };
 
   submitForm = () => {
@@ -80,6 +81,12 @@ export default class PasswordRequest extends Component {
   handlePasswordError = (e) => {
     if ( e.target.value.length < 1 ) { this.setState({ passwordError: true }) }
   };
+
+  pressEnter = (e) => {
+    if ( e.keyCode === 13 && this.state.codeIsFull === true && this.state.passwordIsFull === true ) {
+      this.submitForm();
+    }
+  };
 	
 	render() {
   	return (
@@ -89,6 +96,7 @@ export default class PasswordRequest extends Component {
           margin="normal" 
           onChange={this.changeCode} 
           onBlur={this.handleCodeError}
+          onKeyDown={this.pressEnter}
           error={this.state.codeError}
           fullWidth 
         />
@@ -98,6 +106,7 @@ export default class PasswordRequest extends Component {
           type="password" 
           onChange={this.changePassword}
           onBlur={this.handlePasswordError}
+          onKeyDown={this.pressEnter}
           error={this.state.passwordError}
           helperText={this.state.errorText}
           FormHelperTextProps={{ error: this.state.responseError }}
