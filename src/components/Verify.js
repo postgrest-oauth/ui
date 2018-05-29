@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 import { TextField, Button, Typography } from 'material-ui';
 import { Redirect } from 'react-router-dom';
 
+const currentLocation = window.location;
+let codeValue = "";
+
+  if ( currentLocation.pathname.length > 8 ) {
+    codeValue = currentLocation.pathname.slice(8);
+  }
+
 export default class Verify extends Component {
   constructor(props) {
     super(props);
@@ -24,7 +31,6 @@ export default class Verify extends Component {
     this.submitForm = this.submitForm.bind(this);
     this.changeCode = this.changeCode.bind(this);
     this.handleCodeError = this.handleCodeError.bind(this);
-    this.pressEnter = this.pressEnter.bind(this);
   };
 
   submitForm = () => {
@@ -59,27 +65,23 @@ export default class Verify extends Component {
 
   handleCodeError = (e) => {
     if ( e.target.value.length < 1 ) { this.setState({ codeError: true }) }
-  };
-
-  pressEnter = (e) => {
-    if ( e.keyCode === 13 && this.state.codeIsFull === true ) {
-      this.submitForm();
-    }
-  };
+  }
 
   render() {
     return(
       <div className="form">
-        <Typography>{this.state.lng.verifyMessage}</Typography>
-        <TextField 
+        <Typography color='primary'>{this.state.lng.verifyMessage}</Typography>
+        <TextField
           label={this.state.lng.verifyInput}
           margin="normal" 
-          onChange={this.changeCode} 
+          onChange={this.changeCode}
+          onFocus={this.changeCode}
           onBlur={this.handleCodeError}
-          onKeyDown={this.pressEnter}
           error={this.state.codeError}
           helperText={this.state.errorText}
           FormHelperTextProps={{ error: this.state.responseError }}
+          defaultValue={codeValue}
+          autoFocus={ codeValue.length > 0 ? true : false }
           fullWidth 
         />
         <Button

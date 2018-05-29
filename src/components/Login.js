@@ -7,6 +7,7 @@ export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      lng: this.props.language,
       value: 0
     };
     this.handleChange = this.handleChange.bind(this);
@@ -19,13 +20,13 @@ export default class Login extends Component {
   render() {
     return (
       <div>
-        <Tabs value={this.state.value} onChange={this.handleChange} indicatorColor="primary" textColor="primary">
-          <Tab label="Signin" value={0}/>
-          <Tab label="Signup" value={1}/>
+        <Tabs value={this.state.value} onChange={this.handleChange} textColor="primary" fullWidth={true}>
+          <Tab label={this.state.lng.signIn} value={0}/>
+          <Tab label={this.state.lng.signUp} value={1}/>
         </Tabs>
         {this.state.value === 0 && <Signin language={this.props.language} />}
         {this.state.value === 1 && <Signup language={this.props.language} />}
-       </div>
+      </div>
     );
   }
 };

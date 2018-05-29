@@ -5,27 +5,29 @@ import { Card, Grid } from 'material-ui';
 import PasswordRequest from './components/PasswordRequest';
 import PasswordReset from './components/PasswordReset';
 import Verify from './components/Verify';
+import { MuiThemeProvider } from 'material-ui/styles';
 
 export default class App extends Component {
-
   componentDidMount() {
     document.title = this.props.language.documentTitle;
   }
 
   render() {
     return (
-      <Grid container style={{paddingTop:"120px", justifyContent:"center"}}>
-        <Router>
-          <Card raised = {true} style = {{ width: "420px", padding: "20px 50px" }}>
-            <Switch>
-              <Route exact path="/signin" render={()=> <Login language={this.props.language} /> } />
-              <Route path="/password/request" render={()=> <PasswordRequest language={this.props.language} />} />
-              <Route path="/password/reset" render={()=> <PasswordReset language={this.props.language} />} />
-              <Route path="/verify" render={()=> <Verify language={this.props.language} />} />
-            </Switch>
-          </Card>
-        </Router>
-      </Grid>
+      <MuiThemeProvider theme={this.props.theme}>
+        <Grid container style={{paddingTop:"120px", justifyContent:"center"}}>
+          <Router>
+            <Card raised = {true} className="card">
+              <Switch>
+                <Route exact path="/signin" render={()=> <Login language={this.props.language} /> } />
+                <Route path="/password/request" render={()=> <PasswordRequest language={this.props.language} />} />
+                <Route path="/password/reset" render={()=> <PasswordReset language={this.props.language} />} />
+                <Route path="/verify" render={()=> <Verify language={this.props.language} />} />
+              </Switch>
+            </Card>
+          </Router>
+        </Grid>
+      </MuiThemeProvider>
     );
   }
 }
