@@ -8,6 +8,17 @@ body {
   box-sizing: border-box;
 }
 
+.card {
+  width: 420px;
+  padding: 20px 50px;
+}
+
+@media screen and ( max-width: 380px ) {
+  .card {
+    padding: 20px 20px;
+  }
+}
+
 .forget-password-link {
   color: #2196F3; 
   font-size: 14px;
