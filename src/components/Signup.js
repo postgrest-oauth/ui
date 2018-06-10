@@ -70,7 +70,9 @@ export default class Signup extends Component {
       .then((response)=> {
         if (response.status >= 200 && response.status < 300) {
           this.setState({ isLoaded: true });
-          ReactPixel.track('CompleteRegistration', {email: this.state.emailValue});
+          if ( process.env.REACT_APP_FACEBOOK_PIXEL.length > 0 ) {  
+            ReactPixel.track('CompleteRegistration', {email: this.state.emailValue});
+          }
         } else {
           this.setState({ responseError: true });
           this.setState({ errorText: this.state.lng.signUpError });
