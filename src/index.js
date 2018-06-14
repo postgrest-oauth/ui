@@ -4,6 +4,12 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { createMuiTheme } from 'material-ui/styles';
+import ReactPixel from 'react-facebook-pixel';
+
+if ( !isNaN(process.env.REACT_APP_FACEBOOK_PIXEL) === true ) {
+  ReactPixel.init(process.env.REACT_APP_FACEBOOK_PIXEL);
+  ReactPixel.pageView();
+}
 
 fetch(`${process.env.PUBLIC_URL}/settings.json`, { method: 'GET' })
     .then((response) => {

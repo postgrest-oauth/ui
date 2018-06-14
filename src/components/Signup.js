@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { TextField, Button, FormControl, Input, InputLabel, FormHelperText } from 'material-ui';
 import MaskedInput from 'react-text-mask';
 import { Redirect } from 'react-router-dom';
+import ReactPixel from 'react-facebook-pixel';
 
 function InputMask(props) {
   const { inputRef, ...other } = props;
@@ -69,6 +70,9 @@ export default class Signup extends Component {
       .then((response)=> {
         if (response.status >= 200 && response.status < 300) {
           this.setState({ isLoaded: true });
+          if ( process.env.REACT_APP_FACEBOOK_PIXEL.length > 0 ) {  
+            ReactPixel.track('CompleteRegistration', {email: this.state.emailValue});
+          }
         } else {
           this.setState({ responseError: true });
           this.setState({ errorText: this.state.lng.signUpError });
