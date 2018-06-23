@@ -132,7 +132,8 @@ export default class Signup extends Component {
           margin="normal" 
           onChange={this.changeEmail}
           onBlur={this.handleEmailError}
-          onKeyDown={this.pressEnter}
+          onKeyUp={this.pressEnter}
+          onKeyDown={this.props.disableSpace}
           error={this.state.emailError}
           fullWidth 
         />
@@ -142,13 +143,20 @@ export default class Signup extends Component {
           type="password" 
           onChange={this.changePassword}
           onBlur={this.handlePasswordError}
-          onKeyDown={this.pressEnter}
+          onKeyUp={this.pressEnter}
+          onKeyDown={this.props.disableSpace}
           error={this.state.passwordError}
           fullWidth 
         />
         <FormControl margin="normal" error={this.state.phoneError} fullWidth >
           <InputLabel shrink={true}> {this.state.lng.phoneNumber} </InputLabel>
-          <Input onChange={this.changePhone} onBlur={this.handlePhoneError} onKeyDown={this.pressEnter} inputComponent={InputMask} />
+          <Input 
+            onChange={this.changePhone} 
+            onBlur={this.handlePhoneError} 
+            onKeyUp={this.pressEnter}
+            onKeyDown={this.props.disableSpace}
+            inputComponent={InputMask} 
+          />
           { this.state.responseError ? <FormHelperText error>{this.state.errorText}</FormHelperText> : null }
         </FormControl>
         <Button 

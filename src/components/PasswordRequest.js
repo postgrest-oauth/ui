@@ -76,7 +76,8 @@ export default class PasswordRequest extends Component {
           margin="normal" 
           onChange={this.changeInput} 
           onBlur={this.handleInputError}
-          onKeyDown={this.pressEnter}
+          onKeyUp={this.pressEnter}
+          onKeyDown={this.props.disableSpace}
           error={this.state.inputError}
           helperText={this.state.errorText}
           FormHelperTextProps={{ error: this.state.responseError }}
