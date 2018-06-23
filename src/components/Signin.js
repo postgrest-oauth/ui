@@ -105,7 +105,8 @@ export default class Signin extends Component {
           margin="normal" 
           onChange={this.changeUsername} 
           onBlur={this.handleUsernameError} 
-          onKeyDown={this.pressEnter}
+          onKeyUp={this.pressEnter}
+          onKeyDown={this.props.disableSpace}
           error={this.state.usernameError} 
           fullWidth 
         />
@@ -115,7 +116,8 @@ export default class Signin extends Component {
           type="password" 
           onChange={this.changePassword} 
           onBlur={this.handlePasswordError}
-          onKeyDown={this.pressEnter}
+          onKeyUp={this.pressEnter}
+          onKeyDown={this.props.disableSpace}
           error={this.state.passwordError}
           helperText={this.state.errorText}
           FormHelperTextProps={{ error: this.state.responseError }}
