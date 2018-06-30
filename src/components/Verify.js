@@ -39,7 +39,7 @@ export default class Verify extends Component {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           },
-          body: `code=${this.state.codeValue}`
+          body: `code=${this.state.codeValue.replace(/\s/g, '')}`
         };
 
     fetch(`${process.env.REACT_APP_OAUTH_URL}/verify`, options)
