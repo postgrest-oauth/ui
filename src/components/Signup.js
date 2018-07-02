@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextField, Button, FormControl, Input, InputLabel, FormHelperText } from 'material-ui';
+import { TextField, Button, FormControl, Input, InputLabel, FormHelperText, Typography, Checkbox } from 'material-ui';
 import MaskedInput from 'react-text-mask';
 import { Redirect } from 'react-router-dom';
 import ReactPixel from 'react-facebook-pixel';
@@ -35,12 +35,15 @@ export default class Signup extends Component {
       passwordIsFull: false,
       phoneIsFull: false,
       isLoaded: false,
+      boxChecked: false,
       isDisabled: () => { 
         if (this.state.emailIsFull === false) {
           return true
         } else if (this.state.passwordIsFull === false) {
           return true
         } else if (this.state.phoneIsFull === false) {
+          return true
+        } else if (this.state.boxChecked === false) {
           return true
         } else {
           return false
@@ -55,6 +58,7 @@ export default class Signup extends Component {
     this.handlePasswordError = this.handlePasswordError.bind(this);
     this.handlePhoneError = this.handlePhoneError.bind(this);
     this.pressEnter = this.pressEnter.bind(this);
+    this.toggleCheckbox = this.toggleCheckbox.bind(this);
   };
 
   submitForm = () => {
@@ -128,6 +132,14 @@ export default class Signup extends Component {
     }
   };
 
+  toggleCheckbox = () => {
+    if ( this.state.boxChecked === false ) {
+      this.setState({ boxChecked: true })
+    } else {
+      this.setState({ boxChecked: false })
+    }
+  };
+
   render() {
     return (
       <div className="form">
@@ -155,6 +167,13 @@ export default class Signup extends Component {
           <Input onChange={this.changePhone} onBlur={this.handlePhoneError} onKeyDown={this.pressEnter} inputComponent={InputMask} />
           { this.state.responseError ? <FormHelperText error>{this.state.errorText}</FormHelperText> : null }
         </FormControl>
+        <div className='checkbox-container'>
+          <Checkbox color='primary' onChange={this.toggleCheckbox} />
+          <Typography color='primary'>
+            {this.state.lng.checkboxLabel}
+            <a href={process.env.REACT_APP_PRIVACY_POLICY} className='policy-link'>{this.state.lng.privacyPolicyLink}</a>
+          </Typography>
+        </div>
         <Button 
           variant="raised"
           color="primary" 
