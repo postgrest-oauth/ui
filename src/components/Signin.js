@@ -44,7 +44,7 @@ export default class Signin extends Component {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           },
-          body: `username=${this.state.usernameValue}&password=${this.state.passwordValue}`
+          body: `username=${this.state.usernameValue.replace(/\s/g, '')}&password=${this.state.passwordValue}`
         };
 
     parsed.response_type ? responseType=`response_type=${parsed.response_type}` : responseType="";

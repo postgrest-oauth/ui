@@ -63,7 +63,7 @@ export default class Signup extends Component {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           },
-          body: `email=${this.state.emailValue}&password=${this.state.passwordValue}&phone=${this.state.phoneValue}`
+          body: `email=${this.state.emailValue.replace(/\s/g, '')}&password=${this.state.passwordValue}&phone=${this.state.phoneValue.replace(/\s/g, '')}`
         };
 
     fetch(`${process.env.REACT_APP_OAUTH_URL}/signup`, options)

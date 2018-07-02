@@ -40,7 +40,7 @@ export default class PasswordRequest extends Component {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           },
-          body: `code=${this.state.codeValue}&password=${this.state.passwordValue}`
+          body: `code=${this.state.codeValue.replace(/\s/g, '')}&password=${this.state.passwordValue}`
         };
 
     fetch(`${process.env.REACT_APP_OAUTH_URL}/password/reset`, options)
