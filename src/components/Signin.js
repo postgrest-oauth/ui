@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextField, Button } from 'material-ui';
+import { TextField, Button, Typography, Checkbox } from 'material-ui';
 import { Link } from 'react-router-dom';
 
 const queryString = require('query-string'),
@@ -18,10 +18,13 @@ export default class Signin extends Component {
       passwordValue: "",
       usernameIsFull: false,
       passwordIsFull: false,
+      boxChecked: false,
       isDisabled: () => { 
         if (this.state.usernameIsFull === false) {
           return true
         } else if (this.state.passwordIsFull === false) {
+          return true
+        } else if (this.state.boxChecked === false) {
           return true
         } else {
           return false
@@ -34,6 +37,7 @@ export default class Signin extends Component {
     this.handleUsernameError = this.handleUsernameError.bind(this);
     this.handlePasswordError = this.handlePasswordError.bind(this);
     this.pressEnter = this.pressEnter.bind(this);
+    this.toggleCheckbox = this.toggleCheckbox.bind(this);
   };
 
   submitForm = () => {
@@ -97,6 +101,14 @@ export default class Signin extends Component {
     }
   };
 
+  toggleCheckbox = () => {
+    if ( this.state.boxChecked === false ) {
+      this.setState({ boxChecked: true })
+    } else {
+      this.setState({ boxChecked: false })
+    }
+  }
+
   render() {
     return (
       <div className="form">
@@ -121,6 +133,13 @@ export default class Signin extends Component {
           FormHelperTextProps={{ error: this.state.responseError }}
           fullWidth 
         />
+        <div className='checkbox-container'>
+          <Checkbox color='primary' onChange={this.toggleCheckbox} />
+          <Typography color='primary'>
+            {this.state.lng.checkboxLabel}
+            <a href={process.env.REACT_APP_PRIVACY_POLICY} className='policy-link'>{this.state.lng.privacyPolicyLink}</a>
+          </Typography>
+        </div>
         <Button 
           variant="raised" 
           color="primary" 

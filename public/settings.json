@@ -10,6 +10,8 @@
     "submitButton": "submit",
     "usernameInput": "Username",
     "passwordInput": "Password",
+    "checkboxLabel": "I agree with ",
+    "privacyPolicyLink": "Privacy Policy",
     "passwordResetLink": "Forgot your password?",
     "emailAddress": "Email address",
     "phoneNumber": "Phone number",
