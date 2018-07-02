@@ -19,6 +19,16 @@ body {
   }
 }
 
+.checkbox-container {
+  display: flex;
+  align-items: center;
+}
+
+.policy-link {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .forget-password-link {
   color: #2196F3; 
   font-size: 14px;
