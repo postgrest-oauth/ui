@@ -43,7 +43,7 @@ fetch(`${process.env.PUBLIC_URL}/settings.json`, { method: 'GET' })
       });
 
       let language;
-      if (navigator.language === 'ru') {
+      if (navigator.language === 'ru' || navigator.language === 'ru-RU' || navigator.language === 'ru-UA') {
         language = data.russian;
       } else if (navigator.language === 'uk') {
         language = data.ukrainian;
