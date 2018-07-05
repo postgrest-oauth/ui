@@ -41,7 +41,16 @@ fetch(`${process.env.PUBLIC_URL}/settings.json`, { method: 'GET' })
           MuiTypography: { colorPrimary: {color: data.styles.regularTextColor} }
         }
       });
-      ReactDOM.render(<App language = {data.language} theme = {theme} />, document.getElementById('root'));
+
+      let language;
+      if (navigator.language === 'ru' || navigator.language === 'ru-RU' || navigator.language === 'ru-UA') {
+        language = data.russian;
+      } else if (navigator.language === 'uk') {
+        language = data.ukrainian;
+      } else {
+        language = data.english;
+      }
+      ReactDOM.render(<App language = {language} theme = {theme} />, document.getElementById('root'));
     })
 
 registerServiceWorker();

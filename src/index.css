@@ -9,8 +9,8 @@ body {
 }
 
 .card {
-  width: 420px;
-  padding: 20px 50px;
+  width: 435px;
+  padding: 20px 40px;
 }
 
 @media screen and ( max-width: 380px ) {

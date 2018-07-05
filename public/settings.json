@@ -1,5 +1,5 @@
 { 
-  "language" : {
+  "english" : {
     "documentTitle": "Sign In / Sign Up",
     "signIn": "signin",
     "signUp": "signup",
@@ -19,6 +19,48 @@
     "verifyInput": "Verification code",
     "passwordRequestInput": "Email or phone",
     "newPasswordInput": "New password"
+  },
+  "russian" : {
+    "documentTitle": "Вход / Регистрация",
+    "signIn": "вход",
+    "signUp": "регистрация",
+    "signInError": "Неправильный логин или пароль",
+    "signUpError": "Такой пользователь уже существует",
+    "verifyError": "Неправильный код подтверждения",
+    "requestError": "Неправильный email или телефон",
+    "submitButton": "отправить",
+    "usernameInput": "Логин",
+    "passwordInput": "Пароль",
+    "checkboxLabel": "Я согласен с ",
+    "privacyPolicyLink": "Политикой Конфиденциальности",
+    "passwordResetLink": "Забыли пароль?",
+    "emailAddress": "Email",
+    "phoneNumber": "Телефон",
+    "verifyMessage": "Пожалуйста, введите код подтверждения",
+    "verifyInput": "Код подтверждения",
+    "passwordRequestInput": "Email или телефон",
+    "newPasswordInput": "Новый пароль"
+  },
+  "ukrainian" : {
+    "documentTitle": "Вхід / Реєстрація",
+    "signIn": "вхід",
+    "signUp": "реєстрація",
+    "signInError": "Неправильний логін або пароль",
+    "signUpError": "Такий користувач вже існує",
+    "verifyError": "Неправильний код підтвердження",
+    "requestError": "Неправильний email або телефон",
+    "submitButton": "надіслати",
+    "usernameInput": "Логін",
+    "passwordInput": "Пароль",
+    "checkboxLabel": "Я згоден з ",
+    "privacyPolicyLink": "Політикой Конфіденційності",
+    "passwordResetLink": "Забули пароль?",
+    "emailAddress": "Email",
+    "phoneNumber": "Телефон",
+    "verifyMessage": "Будь ласка, введіть код підтвердження",
+    "verifyInput": "Код підтвердження",
+    "passwordRequestInput": "Email або телефон",
+    "newPasswordInput": "Новий пароль"
   },
   "styles": {
     "tabIndicator": "#2196F3",
