@@ -18,7 +18,9 @@
     "verifyMessage": "Please input verification code from email",
     "verifyInput": "Verification code",
     "passwordRequestInput": "Email or phone",
-    "newPasswordInput": "New password"
+    "newPasswordInput": "New password",
+    "successMessage": "Your account was successfully verified!",
+    "nextButton": "next"
   },
   "russian" : {
     "documentTitle": "Вход / Регистрация",
@@ -39,7 +41,9 @@
     "verifyMessage": "Пожалуйста, введите код подтверждения",
     "verifyInput": "Код подтверждения",
     "passwordRequestInput": "Email или телефон",
-    "newPasswordInput": "Новый пароль"
+    "newPasswordInput": "Новый пароль",
+    "successMessage": "Ваш аккаунт был успешно подтвержден!",
+    "nextButton": "далее"
   },
   "ukrainian" : {
     "documentTitle": "Вхід / Реєстрація",
@@ -60,7 +64,9 @@
     "verifyMessage": "Будь ласка, введіть код підтвердження",
     "verifyInput": "Код підтвердження",
     "passwordRequestInput": "Email або телефон",
-    "newPasswordInput": "Новий пароль"
+    "newPasswordInput": "Новий пароль",
+    "successMessage": "Ваш аккаунт був успішно підтверджений!",
+    "nextButton": "далі"
   },
   "styles": {
     "tabIndicator": "#2196F3",

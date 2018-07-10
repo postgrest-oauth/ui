@@ -6,7 +6,7 @@ import registerServiceWorker from './registerServiceWorker';
 import { createMuiTheme } from 'material-ui/styles';
 import ReactPixel from 'react-facebook-pixel';
 
-if ( !isNaN(process.env.REACT_APP_FACEBOOK_PIXEL) === true && process.env.REACT_APP_FACEBOOK_PIXEL.length > 0 && process.env.REACT_APP_FACEBOOK_PIXEL != undefined ) {
+if ( !isNaN(process.env.REACT_APP_FACEBOOK_PIXEL) === true && process.env.REACT_APP_FACEBOOK_PIXEL.length > 0 && process.env.REACT_APP_FACEBOOK_PIXEL !== undefined ) {
   ReactPixel.init(process.env.REACT_APP_FACEBOOK_PIXEL);
   ReactPixel.pageView();
 }
