@@ -5,6 +5,7 @@ import { Card, Grid } from 'material-ui';
 import PasswordRequest from './components/PasswordRequest';
 import PasswordReset from './components/PasswordReset';
 import Verify from './components/Verify';
+import Success from './components/Success';
 import { MuiThemeProvider } from 'material-ui/styles';
 
 export default class App extends Component {
@@ -23,6 +24,7 @@ export default class App extends Component {
                 <Route path="/password/request" render={()=> <PasswordRequest language={this.props.language} />} />
                 <Route path="/password/reset" render={()=> <PasswordReset language={this.props.language} />} />
                 <Route path="/verify" render={()=> <Verify language={this.props.language} />} />
+                <Route path="/success" render={()=> <Success language={this.props.language} />} />
               </Switch>
             </Card>
           </Router>

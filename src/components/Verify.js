@@ -93,7 +93,7 @@ export default class Verify extends Component {
         >
           {this.state.lng.submitButton}
         </Button>
-        { this.state.isLoaded ? <Redirect to="/signin" push/> : null }
+        { this.state.isLoaded ? <Redirect to="/success" push/> : null }
       </div>
     )
   }
