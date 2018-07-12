@@ -169,7 +169,7 @@ export default class Signup extends Component {
           <Checkbox color='primary' onChange={this.toggleCheckbox} />
           <Typography color='primary'>
             {this.state.lng.checkboxLabel}
-            <a href={process.env.REACT_APP_PRIVACY_POLICY} className='policy-link'>{this.state.lng.privacyPolicyLink}</a>
+            <a href={process.env.REACT_APP_PRIVACY_POLICY} className='policy-link' target='_blank'>{this.state.lng.privacyPolicyLink}</a>
           </Typography>
         </div>
         <Button 
