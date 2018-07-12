@@ -1,4 +1,4 @@
-{ 
+const settings = { 
   "english" : {
     "documentTitle": "Sign In / Sign Up",
     "signIn": "signin",
@@ -84,4 +84,6 @@
     "disabledButtonTextColor": "rgba(255,255,255,0.5)",
     "regularTextColor": "#2196F3"
   }
-}
+};
+
+export default settings;
