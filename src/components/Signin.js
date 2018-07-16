@@ -44,7 +44,7 @@ export default class Signin extends Component {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           },
-          body: `username=${this.state.usernameValue.replace(/\s/g, '')}&password=${this.state.passwordValue}`
+          body: `username=${encodeURIComponent(this.state.usernameValue.replace(/\s/g, ''))}&password=${encodeURIComponent(this.state.passwordValue)}`
         };
 
     parsed.response_type ? responseType=`response_type=${parsed.response_type}` : responseType="";
@@ -52,7 +52,7 @@ export default class Signin extends Component {
     parsed.state ? state=`&state=${parsed.state}` : state="";
     parsed.redirect_uri ? redirectUri=`&redirect_uri=${encodeURIComponent(parsed.redirect_uri)}` : redirectUri="";
 
-    fetch(`${process.env.REACT_APP_OAUTH_URL}/signin`, options)
+    fetch(`localhost/signin`, options)
       .then((response)=> {
         if (response.status >= 200 && response.status < 300) {
           window.location.assign(`${process.env.REACT_APP_OAUTH_URL}/authorize?${responseType}${clientId}${state}${redirectUri}`);

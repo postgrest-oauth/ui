@@ -34,7 +34,7 @@ export default class PasswordRequest extends Component {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           },
-          body: `username=${this.state.inputValue.replace(/\s/g, '')}`
+          body: `username=${encodeURIComponent(this.state.inputValue.replace(/\s/g, ''))}`
         };
 
     fetch(`${process.env.REACT_APP_OAUTH_URL}/password/request`, options)
