@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Login from './components/Login';
-import { Card, Grid } from 'material-ui';
+import { Card } from 'material-ui';
 import PasswordRequest from './components/PasswordRequest';
 import PasswordReset from './components/PasswordReset';
 import Verify from './components/Verify';
@@ -16,7 +16,7 @@ export default class App extends Component {
   render() {
     return (
       <MuiThemeProvider theme={this.props.theme}>
-        <Grid container style={{paddingTop:"120px", justifyContent:"center"}}>
+        <div className='flex-container'>
           <Router>
             <Card raised = {true} className="card">
               <Switch>
@@ -28,7 +28,7 @@ export default class App extends Component {
               </Switch>
             </Card>
           </Router>
-        </Grid>
+        </div>
       </MuiThemeProvider>
     );
   }

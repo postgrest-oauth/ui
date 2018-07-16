@@ -8,6 +8,12 @@ body {
   box-sizing: border-box;
 }
 
+.flex-container {
+  display: flex;
+  justify-content: center;
+  padding-top: 120px;
+}
+
 .card {
   width: 435px;
   padding: 20px 40px;
@@ -16,6 +22,9 @@ body {
 @media screen and ( max-width: 380px ) {
   .card {
     padding: 20px 20px;
+  }
+  .flex-container {
+    padding-top: 50px;
   }
 }
 
