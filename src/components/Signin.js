@@ -52,7 +52,7 @@ export default class Signin extends Component {
     parsed.state ? state=`&state=${parsed.state}` : state="";
     parsed.redirect_uri ? redirectUri=`&redirect_uri=${encodeURIComponent(parsed.redirect_uri)}` : redirectUri="";
 
-    fetch(`localhost/signin`, options)
+    fetch(`${process.env.REACT_APP_OAUTH_URL}/signin`, options)
       .then((response)=> {
         if (response.status >= 200 && response.status < 300) {
           window.location.assign(`${process.env.REACT_APP_OAUTH_URL}/authorize?${responseType}${clientId}${state}${redirectUri}`);
