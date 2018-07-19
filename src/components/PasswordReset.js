@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 import { TextField, Button } from 'material-ui';
 import { Redirect } from 'react-router-dom';
 
+const currentLocation = window.location;
+let codeValue = "";
+
+  if ( currentLocation.pathname.length > 16 ) {
+    codeValue = currentLocation.pathname.slice(16);
+  }
+
 export default class PasswordRequest extends Component {
 	constructor(props) {
     super(props);
@@ -93,11 +100,14 @@ export default class PasswordRequest extends Component {
     	<div className="form">
         <TextField 
           label={this.state.lng.verifyInput}
-          margin="normal" 
+          margin="normal"
+          defaultValue={codeValue}
           onChange={this.changeCode} 
           onBlur={this.handleCodeError}
+          onFocus={this.changeCode}
           onKeyDown={this.pressEnter}
           error={this.state.codeError}
+          autoFocus={ codeValue.length > 0 ? true : false }
           fullWidth 
         />
         <TextField 
