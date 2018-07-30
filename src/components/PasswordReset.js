@@ -131,7 +131,7 @@ export default class PasswordRequest extends Component {
 				>
 					{this.state.lng.submitButton}
 				</Button>
-				{ this.state.isLoaded ? <Redirect to="/signin" push/> : null }
+				{ this.state.isLoaded ? <Redirect to="/password/success" push/> : null }
 			</div>
     )
   }

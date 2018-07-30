@@ -47,6 +47,12 @@ if (navigator.language === 'ru' || navigator.language === 'ru-RU' || navigator.l
     language = settings.english;
   };
 
-ReactDOM.render(<App language = {language} theme = {theme} />, document.getElementById('root'));
+const queryString = require('query-string'),
+parsed = queryString.parse(window.location.search);
+let isUri;
+
+parsed.redirect_uri === undefined ? isUri = false : isUri = true;
+
+ReactDOM.render(<App language = {language} theme = {theme} uri={isUri}/>, document.getElementById('root'));
 
 registerServiceWorker();
