@@ -19,7 +19,9 @@ const settings = {
     "verifyInput": "Verification code",
     "passwordRequestInput": "Email or phone",
     "newPasswordInput": "New password",
-    "successMessage": "Your account was successfully verified!",
+    "verifySuccessMessage": "Your account has been successfully verified!",
+    "passwordSuccessMessage": "Your password has been successfully updated!",
+    "reloginMessage": "Please re-login.",
     "nextButton": "next"
   },
   "russian" : {
@@ -42,7 +44,9 @@ const settings = {
     "verifyInput": "Код подтверждения",
     "passwordRequestInput": "Email или телефон",
     "newPasswordInput": "Новый пароль",
-    "successMessage": "Ваш аккаунт был успешно подтвержден!",
+    "verifySuccessMessage": "Ваш аккаунт успешно подтвержден!",
+    "passwordSuccessMessage": "Новый пароль создан!",
+    "reloginMessage": "Для применения изменений, пожалуйста, перелогиньтесь. ",
     "nextButton": "далее"
   },
   "ukrainian" : {
@@ -65,7 +69,9 @@ const settings = {
     "verifyInput": "Код підтвердження",
     "passwordRequestInput": "Email або телефон",
     "newPasswordInput": "Новий пароль",
-    "successMessage": "Ваш аккаунт був успішно підтверджений!",
+    "verifySuccessMessage": "Ваш обліковий запис підтверджено!",
+    "passwordSuccessMessage": "Створено новий пароль!",
+    "reloginMessage": "Для застосування змін, будь ласка, перелогіньтесь.",
     "nextButton": "далі"
   },
   "styles": {
