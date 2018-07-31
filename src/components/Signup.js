@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextField, Button, FormControl, Input, InputLabel, FormHelperText, Typography, Checkbox } from 'material-ui';
+import { TextField, Button, FormControl, Input, InputLabel, FormHelperText, Typography, Checkbox, CircularProgress } from 'material-ui';
 import MaskedInput from 'react-text-mask';
 import { Redirect } from 'react-router-dom';
 import ReactPixel from 'react-facebook-pixel';
@@ -23,6 +23,7 @@ export default class Signup extends Component {
     super(props);
     this.state = {
       lng: this.props.language,
+      isLoading: false,
       responseError: false,
       errorText: "",
       emailError: false,
@@ -45,6 +46,8 @@ export default class Signup extends Component {
           return true
         } else if (this.state.boxChecked === false) {
           return true
+        } else if (this.state.isLoading === true) {
+          return true
         } else {
           return false
         }
@@ -62,6 +65,7 @@ export default class Signup extends Component {
   };
 
   submitForm = () => {
+    this.setState({ isLoading: true });
     let options = {
           method: "POST",
           headers: {
@@ -76,6 +80,7 @@ export default class Signup extends Component {
           this.setState({ isLoaded: true });
           ReactPixel.track('CompleteRegistration', {email: this.state.emailValue});
         } else {
+          this.setState({ isLoading: false });
           this.setState({ responseError: true });
           this.setState({ errorText: this.state.lng.signUpError });
         }
@@ -180,6 +185,7 @@ export default class Signup extends Component {
           disabled={this.state.isDisabled()}
         >
           {this.state.lng.submitButton}
+          {this.state.isLoading && <CircularProgress className="spinner"/> }
         </Button>
         { this.state.isLoaded ? <Redirect to="/verify" push/> : null } 
       </div>

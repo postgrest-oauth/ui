@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextField, Button } from 'material-ui';
+import { TextField, Button, CircularProgress } from 'material-ui';
 import { Redirect } from 'react-router-dom';
 
 const currentLocation = window.location;
@@ -14,6 +14,7 @@ export default class PasswordRequest extends Component {
     super(props);
     this.state = {
       lng: this.props.language,
+      isLoading: false,
       responseError: false,
       errorText: "",
       codeError: false,
@@ -27,6 +28,8 @@ export default class PasswordRequest extends Component {
         if (this.state.codeIsFull === false) {
           return true
         } else if (this.state.passwordIsFull === false) {
+          return true
+        } else if (this.state.isLoading === true) {
           return true
         } else {
           return false
@@ -42,6 +45,7 @@ export default class PasswordRequest extends Component {
   };
 
   submitForm = () => {
+    this.setState({ isLoading: true });
     let options = {
           method: "POST",
           headers: {
@@ -55,6 +59,7 @@ export default class PasswordRequest extends Component {
         if (response.status >= 200 && response.status < 300) {
           this.setState({ isLoaded: true });
         } else {
+          this.setState({ isLoading: false });
           this.setState({ responseError: true });
           this.setState({ errorText: this.state.lng.verifyError });
         }
@@ -129,7 +134,8 @@ export default class PasswordRequest extends Component {
           onClick={this.submitForm}
           disabled={this.state.isDisabled()}
 				>
-					{this.state.lng.submitButton}
+          {this.state.lng.submitButton}
+          {this.state.isLoading && <CircularProgress className="spinner"/> }
 				</Button>
 				{ this.state.isLoaded ? <Redirect to="/password/success" push/> : null }
 			</div>
