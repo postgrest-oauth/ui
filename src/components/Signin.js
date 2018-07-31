@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextField, Button } from 'material-ui';
+import { TextField, Button, CircularProgress } from 'material-ui';
 import { Link } from 'react-router-dom';
 
 const queryString = require('query-string'),
@@ -10,6 +10,7 @@ export default class Signin extends Component {
     super(props);
     this.state = {
       lng: this.props.language,
+      isLoading: false,
       responseError: false,
       errorText: "",
       usernameError: false,
@@ -22,6 +23,8 @@ export default class Signin extends Component {
         if (this.state.usernameIsFull === false) {
           return true
         } else if (this.state.passwordIsFull === false) {
+          return true
+        } else if (this.state.isLoading === true) {
           return true
         } else {
           return false
@@ -37,6 +40,7 @@ export default class Signin extends Component {
   };
 
   submitForm = () => {
+    this.setState({ isLoading: true });
     let responseType, clientId, state, redirectUri;
     let options = {
           method: "POST",
@@ -57,6 +61,7 @@ export default class Signin extends Component {
         if (response.status >= 200 && response.status < 300) {
           window.location.assign(`${process.env.REACT_APP_OAUTH_URL}/authorize?${responseType}${clientId}${state}${redirectUri}`);
         } else {
+          this.setState({ isLoading: false });
           this.setState({ responseError: true });
           this.setState({ errorText: this.state.lng.signInError });
         }
@@ -129,6 +134,7 @@ export default class Signin extends Component {
           disabled={this.state.isDisabled()}
         >
           {this.state.lng.submitButton}
+          {this.state.isLoading && <CircularProgress className="spinner" color="primary"/> }
         </Button>
         <Link to="/password/request" className="forget-password-link">{this.state.lng.passwordResetLink}</Link>
       </div>

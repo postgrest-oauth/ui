@@ -28,6 +28,10 @@ body {
   }
 }
 
+.spinner {
+  position: absolute;
+}
+
 .checkbox-container {
   display: flex;
   align-items: center;

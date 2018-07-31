@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextField, Button, Typography } from 'material-ui';
+import { TextField, Button, Typography, CircularProgress } from 'material-ui';
 import { Redirect } from 'react-router-dom';
 
 const currentLocation = window.location;
@@ -14,6 +14,7 @@ export default class Verify extends Component {
     super(props);
     this.state = {
       lng: this.props.language,
+      isLoading: false,
       responseError: false,
       errorText: "",
       codeError: false,
@@ -23,6 +24,8 @@ export default class Verify extends Component {
       isDisabled: () => { 
         if (this.state.codeIsFull === false) {
           return true
+        } else if (this.state.isLoading === true) {
+          return true
         } else {
           return false
         }
@@ -31,9 +34,11 @@ export default class Verify extends Component {
     this.submitForm = this.submitForm.bind(this);
     this.changeCode = this.changeCode.bind(this);
     this.handleCodeError = this.handleCodeError.bind(this);
+    this.pressEnter = this.pressEnter.bind(this);
   };
 
   submitForm = () => {
+    this.setState({ isLoading: true });
     let options = {
           method: "POST",
           headers: {
@@ -47,6 +52,7 @@ export default class Verify extends Component {
         if (response.status >= 200 && response.status < 300) {
           this.setState({ isLoaded: true });
         } else {
+          this.setState({ isLoading: false });
           this.setState({ responseError: true });
           this.setState({ errorText: this.state.lng.verifyError });
         }
@@ -67,6 +73,12 @@ export default class Verify extends Component {
     if ( e.target.value.length < 1 ) { this.setState({ codeError: true }) }
   }
 
+  pressEnter = (e) => {
+    if ( e.keyCode === 13 && this.state.codeIsFull === true ) {
+      this.submitForm();
+    }
+  };
+
   render() {
     return(
       <div className="form">
@@ -77,6 +89,7 @@ export default class Verify extends Component {
           onChange={this.changeCode}
           onFocus={this.changeCode}
           onBlur={this.handleCodeError}
+          onKeyDown={this.pressEnter}
           error={this.state.codeError}
           helperText={this.state.errorText}
           FormHelperTextProps={{ error: this.state.responseError }}
@@ -92,6 +105,7 @@ export default class Verify extends Component {
           disabled={this.state.isDisabled()}
         >
           {this.state.lng.submitButton}
+          {this.state.isLoading && <CircularProgress className="spinner" color="primary"/> }
         </Button>
         { this.state.isLoaded ? <Redirect to="/success" push/> : null }
       </div>
