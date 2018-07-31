@@ -185,7 +185,7 @@ export default class Signup extends Component {
           disabled={this.state.isDisabled()}
         >
           {this.state.lng.submitButton}
-          {this.state.isLoading && <CircularProgress className="spinner"/> }
+          {this.state.isLoading && <CircularProgress className="spinner" color="primary"/> }
         </Button>
         { this.state.isLoaded ? <Redirect to="/verify" push/> : null } 
       </div>

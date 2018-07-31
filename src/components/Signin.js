@@ -134,7 +134,7 @@ export default class Signin extends Component {
           disabled={this.state.isDisabled()}
         >
           {this.state.lng.submitButton}
-          {this.state.isLoading && <CircularProgress className="spinner"/> }
+          {this.state.isLoading && <CircularProgress className="spinner" color="primary"/> }
         </Button>
         <Link to="/password/request" className="forget-password-link">{this.state.lng.passwordResetLink}</Link>
       </div>

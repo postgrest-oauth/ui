@@ -14,7 +14,7 @@ if ( !isNaN(process.env.REACT_APP_FACEBOOK_PIXEL) === true && process.env.REACT_
 
 let theme = createMuiTheme({
   palette: {
-    primary: { main: settings.styles.activeTabColor}
+    primary: { main: settings.styles.primaryColor}
   },
   overrides: {
     MuiTabs: { indicator: {backgroundColor: settings.styles.tabIndicator} },

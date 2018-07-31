@@ -77,7 +77,7 @@ const settings = {
   "styles": {
     "tabIndicator": "#2196F3",
     "tabTextColor": "#9E9E9E",
-    "activeTabColor": "#2196F3",
+    "primaryColor": "#2196F3",
     "inputLabelColor": "#9E9E9E",
     "inputTextColor": "#000",
     "underlineActiveColor": "#2196F3",

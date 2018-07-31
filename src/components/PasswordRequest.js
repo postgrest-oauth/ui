@@ -95,7 +95,7 @@ export default class PasswordRequest extends Component {
           disabled={this.state.isDisabled()}
 				>
           {this.state.lng.submitButton}
-          {this.state.isLoading && <CircularProgress className="spinner"/> }
+          {this.state.isLoading && <CircularProgress className="spinner" color="primary"/> }
 				</Button>
         { this.state.isLoaded ? <Redirect to="/password/reset" push/> : null }
 			</div>
