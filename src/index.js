@@ -5,7 +5,8 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { createMuiTheme } from 'material-ui/styles';
 import ReactPixel from 'react-facebook-pixel';
-import settings from './settings';
+import languages from './languages';
+import stylesheet from './stylesheet';
 
 if ( !isNaN(process.env.REACT_APP_FACEBOOK_PIXEL) === true && process.env.REACT_APP_FACEBOOK_PIXEL.length > 0 && process.env.REACT_APP_FACEBOOK_PIXEL !== undefined ) {
   ReactPixel.init(process.env.REACT_APP_FACEBOOK_PIXEL);
@@ -14,37 +15,37 @@ if ( !isNaN(process.env.REACT_APP_FACEBOOK_PIXEL) === true && process.env.REACT_
 
 let theme = createMuiTheme({
   palette: {
-    primary: { main: settings.styles.primaryColor}
+    primary: { main: stylesheet.styles.primaryColor}
   },
   overrides: {
-    MuiTabs: { indicator: {backgroundColor: settings.styles.tabIndicator} },
-    MuiTab: { textColorPrimary: { color: settings.styles.tabTextColor } },
-    MuiInputLabel: { root: {color: settings.styles.inputLabelColor} },
+    MuiTabs: { indicator: {backgroundColor: stylesheet.styles.tabIndicator} },
+    MuiTab: { textColorPrimary: { color: stylesheet.styles.tabTextColor } },
+    MuiInputLabel: { root: {color: stylesheet.styles.inputLabelColor} },
     MuiInput: { 
-      root: {color: settings.styles.inputTextColor},
-        underline: {'&:after': {backgroundColor: settings.styles.underlineActiveColor}},
-        error: {'&:after': {backgroundColor: settings.styles.underlineErrorColor}} 
+      root: {color: stylesheet.styles.inputTextColor},
+        underline: {'&:after': {backgroundColor: stylesheet.styles.underlineActiveColor}},
+        error: {'&:after': {backgroundColor: stylesheet.styles.underlineErrorColor}} 
       },
-    MuiFormHelperText: { error: {color: settings.styles.errorTextColor} },
+    MuiFormHelperText: { error: {color: stylesheet.styles.errorTextColor} },
     MuiButton: { 
       raisedPrimary: { 
-        backgroundColor: settings.styles.buttonColor, 
-        color: settings.styles.buttonTextColor, 
-          '&:hover': { color: settings.styles.buttonTextHoverColor, backgroundColor: settings.styles.buttonHoverColor }
+        backgroundColor: stylesheet.styles.buttonColor, 
+        color: stylesheet.styles.buttonTextColor, 
+          '&:hover': { color: stylesheet.styles.buttonTextHoverColor, backgroundColor: stylesheet.styles.buttonHoverColor }
         }, 
-        disabled: {color: settings.styles.disabledButtonTextColor} 
+        disabled: {color: stylesheet.styles.disabledButtonTextColor} 
       },
-    MuiTypography: { colorPrimary: {color: settings.styles.regularTextColor} }
+    MuiTypography: { colorPrimary: {color: stylesheet.styles.regularTextColor} }
   }
 });
 
 let language;
 if (navigator.language === 'ru' || navigator.language === 'ru-RU' || navigator.language === 'ru-UA') {
-    language = settings.russian;
+    language = languages.russian;
   } else if (navigator.language === 'uk') {
-    language = settings.ukrainian;
+    language = languages.ukrainian;
   } else {
-    language = settings.english;
+    language = languages.english;
   };
 
 const queryString = require('query-string'),
