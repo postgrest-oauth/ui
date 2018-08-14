@@ -137,6 +137,7 @@ export default class Signin extends Component {
           {this.state.isLoading && <CircularProgress className="spinner" color="primary"/> }
         </Button>
         <Link to="/password/request" className="forget-password-link">{this.state.lng.passwordResetLink}</Link>
+        <Link to="/re-verify" className="forget-password-link">{this.state.lng.reVerifyLink}</Link>
       </div>
     )
   }
