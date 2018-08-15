@@ -37,14 +37,26 @@ export default class Verify extends Component {
     this.pressEnter = this.pressEnter.bind(this);
   };
 
+  componentDidMount() {
+    if (codeValue.length > 0) {
+      this.submitForm();
+    }
+  };
+
   submitForm = () => {
     this.setState({ isLoading: true });
+    let requestBody = '';
+    if (codeValue.length > 0) {
+      requestBody = `code=${codeValue}`
+    } else {
+      requestBody = `code=${this.state.codeValue.replace(/\s/g, '')}`
+    }
     let options = {
           method: "POST",
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           },
-          body: `code=${this.state.codeValue.replace(/\s/g, '')}`
+          body: requestBody
         };
 
     fetch(`${process.env.REACT_APP_OAUTH_URL}/verify`, options)
@@ -87,14 +99,12 @@ export default class Verify extends Component {
           label={this.state.lng.verifyInput}
           margin="normal" 
           onChange={this.changeCode}
-          onFocus={this.changeCode}
           onBlur={this.handleCodeError}
           onKeyDown={this.pressEnter}
           error={this.state.codeError}
           helperText={this.state.errorText}
           FormHelperTextProps={{ error: this.state.responseError }}
           defaultValue={codeValue}
-          autoFocus={ codeValue.length > 0 ? true : false }
           fullWidth 
         />
         <Button

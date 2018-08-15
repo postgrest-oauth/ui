@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import { TextField, Button, CircularProgress } from 'material-ui';
 import { Redirect } from 'react-router-dom';
 
+const currentLocation = window.location;
+let usernameValue = "";
+
+if ( currentLocation.pathname.length > 18 ) {
+  usernameValue = currentLocation.pathname.slice(18);
+}
 
 export default class PasswordRequest extends Component {
   constructor(props) {
@@ -31,14 +37,26 @@ export default class PasswordRequest extends Component {
     this.pressEnter = this.pressEnter.bind(this);
   };
 
+  componentDidMount() {
+    if (usernameValue.length > 0) {
+      this.submitForm();
+    }
+  };
+
   submitForm = () => {
     this.setState({ isLoading: true });
+    let requestBody = '';
+    if (usernameValue.length > 0) {
+      requestBody = `username=${usernameValue}`
+    } else {
+      requestBody = `username=${encodeURIComponent(this.state.inputValue.replace(/\s/g, ''))}`
+    }
     let options = {
           method: "POST",
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           },
-          body: `username=${encodeURIComponent(this.state.inputValue.replace(/\s/g, ''))}`
+          body: requestBody
         };
 
     fetch(`${process.env.REACT_APP_OAUTH_URL}/password/request`, options)
@@ -85,6 +103,7 @@ export default class PasswordRequest extends Component {
           error={this.state.inputError}
           helperText={this.state.errorText}
           FormHelperTextProps={{ error: this.state.responseError }}
+          defaultValue={usernameValue}
           fullWidth 
         />
 				<Button 
