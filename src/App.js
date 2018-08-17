@@ -24,10 +24,10 @@ export default class App extends Component {
             <Card raised = {true} className="card">
               <Switch>
                 <Route exact path="/signin" render={()=> <Login language={this.props.language} /> } />
-                <Route path="/password/request" render={()=> <PasswordRequest language={this.props.language} />} />
+                <Route path="/password/request/:username?" render={({match})=> <PasswordRequest language={this.props.language} match={match}/>} />
                 <Route path="/password/reset" render={()=> <PasswordReset language={this.props.language} />} />
-                <Route path="/verify" render={()=> <Verify language={this.props.language} />} />
-                <Route path="/re-verify" render={()=> <ReVerify language={this.props.language} />} />
+                <Route path="/verify/:code?" render={({match}) => <Verify language={this.props.language} match={match}/>} />
+                <Route path="/re-verify/:username?" render={({match})=> <ReVerify language={this.props.language} match={match}/>} />
                 <Route path="/success" render={()=> <VerifySuccess language={this.props.language} uri={this.props.uri} />} />
                 <Route path="/password/success" render={()=> <PasswordSuccess language={this.props.language} uri={this.props.uri} />} />
               </Switch>

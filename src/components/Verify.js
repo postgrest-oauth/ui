@@ -2,13 +2,6 @@ import React, { Component } from 'react';
 import { TextField, Button, Typography, CircularProgress } from 'material-ui';
 import { Redirect } from 'react-router-dom';
 
-const currentLocation = window.location;
-let codeValue = "";
-
-  if ( currentLocation.pathname.length > 8 ) {
-    codeValue = currentLocation.pathname.slice(8);
-  }
-
 export default class Verify extends Component {
   constructor(props) {
     super(props);
@@ -38,16 +31,16 @@ export default class Verify extends Component {
   };
 
   componentDidMount() {
-    if (codeValue.length > 0) {
-      this.submitForm();
+    if ( this.props.match.params.code ) {
+      this.submitForm()
     }
-  };
+  }
 
   submitForm = () => {
     this.setState({ isLoading: true });
     let requestBody = '';
-    if (codeValue.length > 0) {
-      requestBody = `code=${codeValue}`
+    if ( this.props.match.params.code ) {
+      requestBody = `code=${this.props.match.params.code}`
     } else {
       requestBody = `code=${this.state.codeValue.replace(/\s/g, '')}`
     }
@@ -104,7 +97,7 @@ export default class Verify extends Component {
           error={this.state.codeError}
           helperText={this.state.errorText}
           FormHelperTextProps={{ error: this.state.responseError }}
-          defaultValue={codeValue}
+          defaultValue={this.props.match.params.code}
           fullWidth 
         />
         <Button
