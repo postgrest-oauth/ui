@@ -25,7 +25,7 @@ export default class App extends Component {
               <Switch>
                 <Route exact path="/signin" render={()=> <Login language={this.props.language} /> } />
                 <Route path="/password/request/:username?" render={({match})=> <PasswordRequest language={this.props.language} match={match}/>} />
-                <Route path="/password/reset" render={()=> <PasswordReset language={this.props.language} />} />
+                <Route path="/password/reset/:code?" render={({match})=> <PasswordReset language={this.props.language} match={match}/>} />
                 <Route path="/verify/:code?" render={({match}) => <Verify language={this.props.language} match={match}/>} />
                 <Route path="/re-verify/:username?" render={({match})=> <ReVerify language={this.props.language} match={match}/>} />
                 <Route path="/success" render={()=> <VerifySuccess language={this.props.language} uri={this.props.uri} />} />
