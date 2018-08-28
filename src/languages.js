@@ -1,5 +1,10 @@
 const languages = { 
   "english" : {
+    "languageValue": "english",
+    "english": "English",
+    "ukrainian": "Ukrainian",
+    "russian": "Russian",
+    "selectLabel": "Select Language",
     "documentTitle": "Sign In / Sign Up",
     "signIn": "signin",
     "signUp": "signup",
@@ -26,6 +31,11 @@ const languages = {
     "nextButton": "next"
   },
   "russian" : {
+    "languageValue": "russian",
+    "english": "Английский",
+    "ukrainian": "Украинский",
+    "russian": "Русский",
+    "selectLabel": "Выберите язык",
     "documentTitle": "Вход / Регистрация",
     "signIn": "вход",
     "signUp": "регистрация",
@@ -52,6 +62,11 @@ const languages = {
     "nextButton": "далее"
   },
   "ukrainian" : {
+    "languageValue": "ukrainian",
+    "english": "Англійська",
+    "ukrainian": "Українська",
+    "russian": "Російська",
+    "selectLabel": "Виберіть Мову",
     "documentTitle": "Вхід / Реєстрація",
     "signIn": "вхід",
     "signUp": "реєстрація",
