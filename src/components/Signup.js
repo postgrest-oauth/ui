@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextField, Button, FormControl, Input, InputLabel, FormHelperText, Typography, Checkbox, CircularProgress } from 'material-ui';
+import { TextField, Button, FormControl, Input, InputLabel, FormHelperText, Typography, Checkbox, CircularProgress, Select, MenuItem } from 'material-ui';
 import MaskedInput from 'react-text-mask';
 import { Redirect } from 'react-router-dom';
 import ReactPixel from 'react-facebook-pixel';
@@ -23,6 +23,7 @@ export default class Signup extends Component {
     super(props);
     this.state = {
       lng: this.props.language,
+      language: this.props.language.languageValue,
       isLoading: false,
       responseError: false,
       errorText: "",
@@ -62,6 +63,7 @@ export default class Signup extends Component {
     this.handlePhoneError = this.handlePhoneError.bind(this);
     this.pressEnter = this.pressEnter.bind(this);
     this.toggleCheckbox = this.toggleCheckbox.bind(this);
+    this.changeSelect = this.changeSelect.bind(this);
   };
 
   submitForm = () => {
@@ -71,9 +73,8 @@ export default class Signup extends Component {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           },
-          body: `email=${encodeURIComponent(this.state.emailValue.replace(/\s/g, ''))}&password=${encodeURIComponent(this.state.passwordValue)}&phone=${this.state.phoneValue.replace(/\s/g, '')}`
+          body: `email=${encodeURIComponent(this.state.emailValue.replace(/\s/g, ''))}&password=${encodeURIComponent(this.state.passwordValue)}&phone=${this.state.phoneValue.replace(/\s/g, '')}&language=${this.state.language}`
         };
-
     fetch(`${process.env.REACT_APP_OAUTH_URL}/signup`, options)
       .then((response)=> {
         if (response.status >= 200 && response.status < 300) {
@@ -143,6 +144,10 @@ export default class Signup extends Component {
     }
   };
 
+  changeSelect = e => {
+    this.setState({ language: e.target.value })
+  }
+
   render() {
     return (
       <div className="form">
@@ -169,6 +174,17 @@ export default class Signup extends Component {
           <InputLabel shrink={true}> {this.state.lng.phoneNumber} </InputLabel>
           <Input onChange={this.changePhone} onBlur={this.handlePhoneError} onKeyDown={this.pressEnter} inputComponent={InputMask} />
           { this.state.responseError ? <FormHelperText error>{this.state.errorText}</FormHelperText> : null }
+        </FormControl>
+        <FormControl margin="normal" fullWidth>
+          <InputLabel>{this.state.lng.selectLabel}</InputLabel>
+          <Select 
+            value={this.state.language}
+            onChange={this.changeSelect}
+          >
+            <MenuItem value='english'>{this.state.lng.english}</MenuItem>
+            <MenuItem value='ukrainian'>{this.state.lng.ukrainian}</MenuItem>
+            <MenuItem value='russian'>{this.state.lng.russian}</MenuItem>
+          </Select>
         </FormControl>
         <div className='checkbox-container'>
           <Checkbox color='primary' onChange={this.toggleCheckbox} />
