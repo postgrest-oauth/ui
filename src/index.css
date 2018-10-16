@@ -11,7 +11,7 @@ body {
 .flex-container {
   display: flex;
   justify-content: center;
-  padding-top: 120px;
+  padding-top: 100px;
 }
 
 .card {

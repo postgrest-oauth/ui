@@ -1,6 +1,6 @@
 const languages = { 
   "english" : {
-    "languageValue": "english",
+    "languageValue": "en",
     "english": "English",
     "ukrainian": "Ukrainian",
     "russian": "Russian",
@@ -8,6 +8,8 @@ const languages = {
     "documentTitle": "Sign In / Sign Up",
     "signIn": "signin",
     "signUp": "signup",
+    "loginFacebook": "Login with Facebook",
+    "signupFacebook": "Signup with Facebook",
     "signInError": "Wrong username or password",
     "signUpError": "User already exists",
     "verifyError": "Wrong verification code",
@@ -31,7 +33,7 @@ const languages = {
     "nextButton": "next"
   },
   "russian" : {
-    "languageValue": "russian",
+    "languageValue": "ru",
     "english": "Английский",
     "ukrainian": "Украинский",
     "russian": "Русский",
@@ -39,6 +41,8 @@ const languages = {
     "documentTitle": "Вход / Регистрация",
     "signIn": "вход",
     "signUp": "регистрация",
+    "loginFacebook": "Войти с Facebook",
+    "signupFacebook": "Регистрация с Facebook",
     "signInError": "Неправильный логин или пароль",
     "signUpError": "Такой пользователь уже существует",
     "verifyError": "Неправильный код подтверждения",
@@ -62,7 +66,7 @@ const languages = {
     "nextButton": "далее"
   },
   "ukrainian" : {
-    "languageValue": "ukrainian",
+    "languageValue": "uk",
     "english": "Англійська",
     "ukrainian": "Українська",
     "russian": "Російська",
@@ -70,6 +74,8 @@ const languages = {
     "documentTitle": "Вхід / Реєстрація",
     "signIn": "вхід",
     "signUp": "реєстрація",
+    "loginFacebook": "Увійти с Facebook",
+    "signupFacebook": "Реєстрація с Facebook",
     "signInError": "Неправильний логін або пароль",
     "signUpError": "Такий користувач вже існує",
     "verifyError": "Неправильний код підтвердження",

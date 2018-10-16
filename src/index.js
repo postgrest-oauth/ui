@@ -7,6 +7,10 @@ import { createMuiTheme } from 'material-ui/styles';
 import ReactPixel from 'react-facebook-pixel';
 import languages from './languages';
 import stylesheet from './stylesheet';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+
+library.add(fab)
 
 if ( !isNaN(process.env.REACT_APP_FACEBOOK_PIXEL) === true && process.env.REACT_APP_FACEBOOK_PIXEL.length > 0 && process.env.REACT_APP_FACEBOOK_PIXEL !== undefined ) {
   ReactPixel.init(process.env.REACT_APP_FACEBOOK_PIXEL);

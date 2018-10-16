@@ -3,8 +3,9 @@ import { TextField, Button, FormControl, Input, InputLabel, FormHelperText, Typo
 import MaskedInput from 'react-text-mask';
 import { Redirect } from 'react-router-dom';
 import ReactPixel from 'react-facebook-pixel';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-function InputMask(props) {
+export const InputMask = (props) => {
   const { inputRef, ...other } = props;
   return (
     <MaskedInput
@@ -12,7 +13,7 @@ function InputMask(props) {
       mask={['+',/\d/,/\d/,/\d/,' ','(',/\d/,/\d/,')',' ',/\d/,/\d/,/\d/,'-',/\d/,/\d/,'-',/\d/,/\d/]}
       placeholder="+123 (45) 678-90-12"
       ref={inputRef}
-      guide={false}
+      guide={true}
       style={{ border:"none", width:"100%", outline:"none", fontFamily:"Roboto", fontSize:"16px", padding:"5px 0" }}
     />
   )
@@ -73,7 +74,7 @@ export default class Signup extends Component {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           },
-          body: `email=${encodeURIComponent(this.state.emailValue.replace(/\s/g, ''))}&password=${encodeURIComponent(this.state.passwordValue)}&phone=${this.state.phoneValue.replace(/\s/g, '')}&language=${this.state.language}`
+          body: `email=${encodeURIComponent(this.state.emailValue.replace(/\s/g, ''))}&password=${encodeURIComponent(this.state.passwordValue)}&phone=${this.state.phoneValue.replace(/\s/g, '')}&lang=${this.state.language}`
         };
     fetch(`${process.env.REACT_APP_OAUTH_URL}/signup`, options)
       .then((response)=> {
@@ -196,12 +197,20 @@ export default class Signup extends Component {
         <Button 
           variant="raised"
           color="primary" 
-          style={{ padding:"10px 30px", marginTop:"15px" }}
+          style={{ padding:"10px 30px", margin:"15px 0 10px 0" }}
           onClick={this.submitForm}
           disabled={this.state.isDisabled()}
         >
           {this.state.lng.submitButton}
           {this.state.isLoading && <CircularProgress className="spinner" color="primary"/> }
+        </Button>
+        <Button
+          variant="raised" 
+          color="primary"
+          href={`https://www.facebook.com/v3.1/dialog/oauth?client_id=${process.env.REACT_APP_FACEBOOK_ID}&redirect_uri=${window.location.origin}/callback/facebook?redirect_uri=${this.props.redirectUri}&scope=email&auth_type=rerequest&state=${this.props.stateSignup}`}
+        >
+          <FontAwesomeIcon icon={['fab','facebook-square']} size='2x' style={{marginRight:'10px'}}/>
+          {this.state.lng.signupFacebook}
         </Button>
         { this.state.isLoaded ? <Redirect to="/verify" push/> : null } 
       </div>

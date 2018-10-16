@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { TextField, Button, CircularProgress } from 'material-ui';
 import { Link } from 'react-router-dom';
-
-const queryString = require('query-string'),
-      parsed = queryString.parse(window.location.search);
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default class Signin extends Component {
   constructor(props) {
@@ -51,10 +49,10 @@ export default class Signin extends Component {
           body: `username=${encodeURIComponent(this.state.usernameValue.replace(/\s/g, ''))}&password=${encodeURIComponent(this.state.passwordValue)}`
         };
 
-    parsed.response_type ? responseType=`response_type=${parsed.response_type}` : responseType="";
-    parsed.client_id ? clientId=`&client_id=${parsed.client_id}` : clientId="";
-    parsed.state ? state=`&state=${parsed.state}` : state="";
-    parsed.redirect_uri ? redirectUri=`&redirect_uri=${encodeURIComponent(parsed.redirect_uri)}` : redirectUri="";
+    responseType=`response_type=${this.props.responseType}`;
+    clientId=`&client_id=${this.props.clientId}`;
+    state=`&state=${this.props.state}`;
+    redirectUri=`&redirect_uri=${this.props.redirectUri}`;
 
     fetch(`${process.env.REACT_APP_OAUTH_URL}/signin`, options)
       .then((response)=> {
@@ -135,6 +133,15 @@ export default class Signin extends Component {
         >
           {this.state.lng.submitButton}
           {this.state.isLoading && <CircularProgress className="spinner" color="primary"/> }
+        </Button>
+        <Button
+          variant="raised" 
+          color="primary"
+          style={{ marginBottom:"10px" }}
+          href={`https://www.facebook.com/v3.1/dialog/oauth?client_id=1463285380439589&redirect_uri=${window.location.origin}/callback/facebook?redirect_uri=${this.props.redirectUri}&scope=email&auth_type=rerequest&state=${this.props.stateSignin}`}
+        >
+          <FontAwesomeIcon icon={['fab','facebook-square']} size='2x' style={{marginRight:'10px'}}/>
+          {this.state.lng.loginFacebook}
         </Button>
         <Link to="/password/request" className="forget-password-link">{this.state.lng.passwordResetLink}</Link>
         <Link to="/re-verify" className="forget-password-link">{this.state.lng.reVerifyLink}</Link>
