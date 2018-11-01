@@ -6,20 +6,26 @@ import {InputMask} from './Signup';
 const parsed = queryString.parse(window.location.search);
 
 export default class Facebook extends React.Component {
-  state = {
-    uriState: '',
-    fbError: false,
-    phoneIsFull: false,
-    phoneError: false,
-    isLoading: false,
-    phoneValue: "",
-    isDisabled: () => { 
-      if (this.state.phoneIsFull === false) {
-        return true
-      } else {
-        return false
+  constructor(props) {
+    super(props);
+    this.state = {
+      uriState: '',
+      fbError: false,
+      phoneIsFull: false,
+      phoneError: false,
+      isLoading: false,
+      phoneValue: "",
+      isDisabled: () => { 
+        if (this.state.phoneIsFull === false) {
+          return true
+        } else {
+          return false
+        }
       }
     }
+    this.submitForm = this.submitForm.bind(this)
+    this.handlePhoneError = this.handlePhoneError.bind(this)
+    this.changePhone = this.changePhone.bind(this)
   }
 
   componentDidMount() {
@@ -82,29 +88,28 @@ export default class Facebook extends React.Component {
       <div className='form'>
         {checkState(
           this.state, 
-          this.props, 
-          this.state.uriState, 
+          this.props,
           this.props.stateSignin, 
-          this.props.stateSignup, 
-          this.state.fbError,
+          this.props.stateSignup,
           this.handlePhoneError,
-          this.submitForm
+          this.submitForm,
+          this.changePhone
         )}
       </div>
     )
   }
 }
 
-const checkState = (state, props, uriState, signin, signup, error, handlePhoneError, submitForm) => {
-  if (uriState === signin && !error) {
+const checkState = (state, props, signin, signup, handlePhoneError, submitForm, changePhone) => {
+  if (state.uriState === signin && !state.error) {
     return <Typography color='primary' variant='title'>Пожалуйста подождите</Typography>
-  } else if (uriState === signup && !error) {
+  } else if (state.uriState === signup && !state.error) {
     return (
       <div>
         <Typography color='primary'>Пожалуйста введите ваш номер телефона</Typography>
         <FormControl margin="normal" error={state.phoneError} fullWidth >
           <InputLabel shrink={true}> {props.language.phoneNumber} </InputLabel>
-          <Input onChange={this.changePhone} onBlur={handlePhoneError} inputComponent={InputMask} />
+          <Input onChange={changePhone} onBlur={handlePhoneError} inputComponent={InputMask} />
         </FormControl>
         <Button
           variant="raised"
@@ -118,7 +123,7 @@ const checkState = (state, props, uriState, signin, signup, error, handlePhoneEr
         </Button>
       </div>
     )
-  } else if (uriState !== signup || uriState !== signin || error) {
+  } else if (state.uriState !== signup || state.uriState !== signin || state.error) {
     return <Typography color='primary' variant='title'>Упс, ошибочка :(</Typography>
   }
 }
