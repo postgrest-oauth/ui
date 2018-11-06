@@ -36,7 +36,7 @@ export default class Facebook extends React.Component {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: `lang=${this.props.language.languageValue}&redirect_uri=${window.location.origin}/callback/facebook?redirect_uri=${this.props.redirectUri}&code=${parsed.code}`
+        body: `lang=${this.props.language.languageValue}&phone=${this.state.phoneValue}&redirect_uri=${window.location.origin}/callback/facebook?redirect_uri=${this.props.redirectUri}&code=${encodeURIComponent(parsed.code)}`
       }
       fetch(`${process.env.REACT_APP_OAUTH_URL}/facebook`, options)
         .then(response => {
@@ -102,7 +102,7 @@ export default class Facebook extends React.Component {
 
 const checkState = (state, props, signin, signup, handlePhoneError, submitForm, changePhone) => {
   if (state.uriState === signin && !state.error) {
-    return <Typography color='primary' variant='title'>Пожалуйста подождите</Typography>
+    return <Typography color='primary' variant='title'>{props.language.fbWait}</Typography>
   } else if (state.uriState === signup && !state.error) {
     return (
       <div>
@@ -124,6 +124,6 @@ const checkState = (state, props, signin, signup, handlePhoneError, submitForm, 
       </div>
     )
   } else if (state.uriState !== signup || state.uriState !== signin || state.error) {
-    return <Typography color='primary' variant='title'>Упс, ошибочка :(</Typography>
+    return <Typography color='primary' variant='title'>{props.language.fbError}</Typography>
   }
 }

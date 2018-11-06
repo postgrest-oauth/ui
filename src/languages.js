@@ -30,7 +30,9 @@ const languages = {
     "verifySuccessMessage": "Your account has been successfully verified!",
     "passwordSuccessMessage": "Your password has been successfully updated!",
     "reloginMessage": "Please re-login.",
-    "nextButton": "next"
+    "nextButton": "next",
+    "fbError": "Some error happened :(",
+    "fbWait": "Please wait"
   },
   "russian" : {
     "languageValue": "ru",
@@ -63,7 +65,9 @@ const languages = {
     "verifySuccessMessage": "Ваш аккаунт успешно подтвержден!",
     "passwordSuccessMessage": "Новый пароль создан!",
     "reloginMessage": "Для применения изменений, пожалуйста, перелогиньтесь. ",
-    "nextButton": "далее"
+    "nextButton": "далее",
+    "fbError": "Произошла ошибка :(",
+    "fbWait": "Пожалуйста, подождите"
   },
   "ukrainian" : {
     "languageValue": "uk",
@@ -96,7 +100,9 @@ const languages = {
     "verifySuccessMessage": "Ваш обліковий запис підтверджено!",
     "passwordSuccessMessage": "Створено новий пароль!",
     "reloginMessage": "Для застосування змін, будь ласка, перелогіньтесь.",
-    "nextButton": "далі"
+    "nextButton": "далі",
+    "fbError": "Трапилася помилка :(",
+    "fbWait": "Зачекайте, будь ласка"
   }
 };
 
