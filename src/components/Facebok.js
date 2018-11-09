@@ -9,12 +9,16 @@ export default class Facebook extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      uriState: '',
+      fbState: '',
       fbError: false,
       phoneIsFull: false,
       phoneError: false,
       isLoading: false,
       phoneValue: "",
+      responseType: '',
+      clientId: '',
+      uriState: '',
+      redirectUri: '',
       isDisabled: () => { 
         if (this.state.phoneIsFull === false) {
           return true
@@ -29,19 +33,27 @@ export default class Facebook extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({ uriState: parsed.state })
+    this.setState({ 
+      fbState: parsed.state,
+      responseType: window.localStorage.getItem('responseType'),
+      clientId: window.localStorage.getItem('clientId'),
+      uriState: window.localStorage.getItem('uriState'),
+      redirectUri: window.localStorage.getItem('redirectUri')
+    })
+
     if (parsed.state === this.props.stateSignin) {
       const options = {
         method: 'post',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: `lang=${this.props.language.languageValue}&phone=${this.state.phoneValue}&redirect_uri=${window.location.origin}/callback/facebook?redirect_uri=${this.props.redirectUri}&code=${encodeURIComponent(parsed.code)}`
+        body: `lang=${this.props.language.languageValue}&phone=${this.state.phoneValue}&redirect_uri=${window.location.origin}/callback/facebook&code=${encodeURIComponent(parsed.code)}`
       }
       fetch(`${process.env.REACT_APP_OAUTH_URL}/facebook`, options)
         .then(response => {
           if (response.ok) {
-            window.location.assign(`${process.env.REACT_APP_OAUTH_URL}/authorize?response_type=${this.props.responseType}&client_id=${this.props.clientId}&state=${this.props.state}&redirect_uri=${this.props.redirectUri}`);
+            window.localStorage.clear();
+            window.location.assign(`${process.env.REACT_APP_OAUTH_URL}/authorize?response_type=${this.state.responseType}&client_id=${this.state.clientId}&state=${this.state.uriState}&redirect_uri=${this.state.redirectUri}`);
           } else {
             this.setState({fbError: true})
           }
@@ -56,12 +68,13 @@ export default class Facebook extends React.Component {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           },
-          body: `lang=${this.props.language.languageValue}&phone=${this.state.phoneValue}&redirect_uri=${window.location.origin}/callback/facebook?redirect_uri=${this.props.redirectUri}&code=${parsed.code}`
+          body: `lang=${this.props.language.languageValue}&phone=${this.state.phoneValue}&redirect_uri=${window.location.origin}/callback/facebook&code=${parsed.code}`
         };
     fetch(`${process.env.REACT_APP_OAUTH_URL}/facebook`, options)
       .then((response)=> {
         if (response.ok) {
-          window.location.assign(`${process.env.REACT_APP_OAUTH_URL}/authorize?response_type=${this.props.responseType}&client_id=${this.props.clientId}&state=${this.props.state}&redirect_uri=${this.props.redirectUri}`);
+          window.localStorage.clear();
+          window.location.assign(`${process.env.REACT_APP_OAUTH_URL}/authorize?response_type=${this.state.responseType}&client_id=${this.state.clientId}&state=${this.state.uriState}&redirect_uri=${this.state.redirectUri}`);
         } else {
           this.setState({ isLoading: false });
           this.setState({fbError: true})
@@ -85,28 +98,30 @@ export default class Facebook extends React.Component {
 
   render() {
     return (
-      <div className='form'>
-        {checkState(
-          this.state, 
-          this.props,
-          this.props.stateSignin, 
-          this.props.stateSignup,
-          this.handlePhoneError,
-          this.submitForm,
-          this.changePhone
-        )}
-      </div>
+      checkState(
+        this.state, 
+        this.props,
+        this.props.stateSignin, 
+        this.props.stateSignup,
+        this.handlePhoneError,
+        this.submitForm,
+        this.changePhone
+      )
     )
   }
 }
 
 const checkState = (state, props, signin, signup, handlePhoneError, submitForm, changePhone) => {
-  if (state.uriState === signin && !state.error) {
-    return <Typography color='primary' variant='title'>{props.language.fbWait}</Typography>
-  } else if (state.uriState === signup && !state.error) {
+  if (state.fbState === signin && !state.error) {
     return (
-      <div>
-        <Typography color='primary'>Пожалуйста введите ваш номер телефона</Typography>
+      <div className='form'>
+        <Typography color='primary' variant='title'>{props.language.fbWait}</Typography>
+      </div>
+    )
+  } else if (state.fbState === signup && !state.error) {
+    return (
+      <div className='form'>
+        <Typography color='primary'>{props.language.fbEnterPhone}</Typography>
         <FormControl margin="normal" error={state.phoneError} fullWidth >
           <InputLabel shrink={true}> {props.language.phoneNumber} </InputLabel>
           <Input onChange={changePhone} onBlur={handlePhoneError} inputComponent={InputMask} />
@@ -123,7 +138,11 @@ const checkState = (state, props, signin, signup, handlePhoneError, submitForm, 
         </Button>
       </div>
     )
-  } else if (state.uriState !== signup || state.uriState !== signin || state.error) {
-    return <Typography color='primary' variant='title'>{props.language.fbError}</Typography>
+  } else if (state.fbState !== signup || state.fbState !== signin || state.error) {
+    return (
+      <div className='form'>
+        <Typography color='primary' variant='title'>{props.language.fbError}</Typography>
+      </div>
+    )
   }
 }

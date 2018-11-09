@@ -207,7 +207,7 @@ export default class Signup extends Component {
         <Button
           variant="raised" 
           color="primary"
-          href={`https://www.facebook.com/v3.1/dialog/oauth?client_id=${process.env.REACT_APP_FACEBOOK_ID}&redirect_uri=${window.location.origin}/callback/facebook?redirect_uri=${this.props.redirectUri}&scope=email&auth_type=rerequest&state=${this.props.stateSignup}`}
+          href={`https://www.facebook.com/v3.1/dialog/oauth?client_id=${process.env.REACT_APP_FACEBOOK_ID}&redirect_uri=${window.location.origin}/callback/facebook&scope=email&auth_type=rerequest&state=${this.props.stateSignup}`}
         >
           <FontAwesomeIcon icon={['fab','facebook-square']} size='2x' style={{marginRight:'10px'}}/>
           {this.state.lng.signupFacebook}

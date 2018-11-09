@@ -32,7 +32,8 @@ const languages = {
     "reloginMessage": "Please re-login.",
     "nextButton": "next",
     "fbError": "Some error happened :(",
-    "fbWait": "Please wait"
+    "fbWait": "Please wait",
+    "fbEnterPhone": "Please, enter your phone number"
   },
   "russian" : {
     "languageValue": "ru",
@@ -67,7 +68,8 @@ const languages = {
     "reloginMessage": "Для применения изменений, пожалуйста, перелогиньтесь. ",
     "nextButton": "далее",
     "fbError": "Произошла ошибка :(",
-    "fbWait": "Пожалуйста, подождите"
+    "fbWait": "Пожалуйста, подождите",
+    "fbEnterPhone": "Пожалуйста, введите ваш номер телефона"
   },
   "ukrainian" : {
     "languageValue": "uk",
@@ -102,7 +104,8 @@ const languages = {
     "reloginMessage": "Для застосування змін, будь ласка, перелогіньтесь.",
     "nextButton": "далі",
     "fbError": "Трапилася помилка :(",
-    "fbWait": "Зачекайте, будь ласка"
+    "fbWait": "Зачекайте, будь ласка",
+    "fbEnterPhone": "Будь ласка, введіть ваш номер телефону"
   }
 };
 

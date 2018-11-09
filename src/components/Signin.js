@@ -138,7 +138,7 @@ export default class Signin extends Component {
           variant="raised" 
           color="primary"
           style={{ marginBottom:"10px" }}
-          href={`https://www.facebook.com/v3.1/dialog/oauth?client_id=${process.env.REACT_APP_FACEBOOK_ID}&redirect_uri=${window.location.origin}/callback/facebook?redirect_uri=${this.props.redirectUri}&scope=email&auth_type=rerequest&state=${this.props.stateSignin}`}
+          href={`https://www.facebook.com/v3.1/dialog/oauth?client_id=${process.env.REACT_APP_FACEBOOK_ID}&redirect_uri=${window.location.origin}/callback/facebook&scope=email&auth_type=rerequest&state=${this.props.stateSignin}`}
         >
           <FontAwesomeIcon icon={['fab','facebook-square']} size='2x' style={{marginRight:'10px'}}/>
           {this.state.lng.loginFacebook}

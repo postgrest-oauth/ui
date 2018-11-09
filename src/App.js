@@ -17,17 +17,24 @@ import Facebook from './components/Facebok';
 const parsed = queryString.parse(window.location.search);
 
 export default class App extends Component {
-  state = {
-    stateSignin: 'signin',
-    stateSignup: 'signup',
-    redirectUri: encodeURIComponent(parsed.redirect_uri),
-    responseType: parsed.response_type,
-    clientId: parsed.clientId,
-    state: parsed.state
+  constructor(props) {
+    super(props);
+    this.state = {
+      stateSignin: 'signin',
+      stateSignup: 'signup',
+      redirectUri: encodeURIComponent(parsed.redirect_uri),
+      responseType: parsed.response_type,
+      clientId: parsed.client_id,
+      uriState: parsed.state
+    }
   }
 
   componentDidMount() {
     document.title = this.props.language.documentTitle;
+    window.localStorage.setItem('redirectUri', this.state.redirectUri);
+    window.localStorage.setItem('responseType', this.state.responseType);
+    window.localStorage.setItem('clientId', this.state.clientId);
+    window.localStorage.setItem('uriState', this.state.uriState);
   }
 
   render() {
@@ -47,7 +54,7 @@ export default class App extends Component {
                       redirectUri={this.state.redirectUri}
                       responseType={this.state.responseType}
                       clientId={this.state.clientId}
-                      state={this.state.state}
+                      state={this.state.uriState}
                     />
                   )} 
                 />
@@ -63,11 +70,7 @@ export default class App extends Component {
                     <Facebook 
                       language={this.props.language} 
                       stateSignin={this.state.stateSignin} 
-                      stateSignup={this.state.stateSignup} 
-                      redirectUri={this.state.redirectUri}
-                      responseType={this.state.responseType}
-                      clientId={this.state.clientId}
-                      state={this.state.state}
+                      stateSignup={this.state.stateSignup}
                     />
                   )}
                 />
