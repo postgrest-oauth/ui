@@ -14,11 +14,11 @@ export default class Facebook extends React.Component {
       phoneIsFull: false,
       phoneError: false,
       isLoading: false,
-      phoneValue: "",
+      phoneValue: null,
       responseType: '',
       clientId: '',
       uriState: '',
-      redirectUri: '',
+      redirectUri: null,
       isDisabled: () => { 
         if (this.state.phoneIsFull === false) {
           return true
@@ -33,27 +33,26 @@ export default class Facebook extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({ 
-      fbState: parsed.state,
+    this.setState({ fbState: parsed.state })
+    const params = {
       responseType: window.localStorage.getItem('responseType'),
       clientId: window.localStorage.getItem('clientId'),
       uriState: window.localStorage.getItem('uriState'),
       redirectUri: window.localStorage.getItem('redirectUri')
-    })
-
-    if (parsed.state === this.props.stateSignin) {
+    }
+    if (parsed.state === this.props.stateSignin && params.redirectUri) {
       const options = {
         method: 'post',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: `lang=${this.props.language.languageValue}&phone=${this.state.phoneValue}&redirect_uri=${window.location.origin}/callback/facebook&code=${encodeURIComponent(parsed.code)}`
+        body: `lang=${this.props.language.languageValue}&phone=${this.state.phoneValue}&redirect_uri=${window.location.origin}/callback/facebook&code=${parsed.code}`
       }
       fetch(`${process.env.REACT_APP_OAUTH_URL}/facebook`, options)
         .then(response => {
           if (response.ok) {
             window.localStorage.clear();
-            window.location.assign(`${process.env.REACT_APP_OAUTH_URL}/authorize?response_type=${this.state.responseType}&client_id=${this.state.clientId}&state=${this.state.uriState}&redirect_uri=${this.state.redirectUri}`);
+            window.location.assign(`${process.env.REACT_APP_OAUTH_URL}/authorize?response_type=${params.responseType}&client_id=${params.clientId}&state=${params.uriState}&redirect_uri=${params.redirectUri}`);
           } else {
             this.setState({fbError: true})
           }

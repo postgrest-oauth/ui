@@ -22,7 +22,7 @@ export default class App extends Component {
     this.state = {
       stateSignin: 'signin',
       stateSignup: 'signup',
-      redirectUri: encodeURIComponent(parsed.redirect_uri),
+      redirectUri: parsed.redirect_uri,
       responseType: parsed.response_type,
       clientId: parsed.client_id,
       uriState: parsed.state
