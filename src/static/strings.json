@@ -1,0 +1,23 @@
+{
+  "en": {
+    "documentTitle": "Sign In / Sign Up",
+    "signInTab": "signin",
+    "signUpTab": "signup",
+    "submitButton": "submit",
+    "emailPhoneInput": "Email or phone",
+    "passwordInput": "Password",
+    "passwordResetLink": "Forgot your password?",
+    "reVerifyLink": "Repeat verification",
+    "emailInput": "Email address",
+    "phoneInput": "Phone number",
+    "fieldRequired": "This field is required",
+    "emailIncorrect": "Email is incorrect",
+    "checkboxLabel": "I agree with",
+    "privacyPolicyLink": "Privacy Policy",
+    "verifyText": "Please input verification code from email",
+    "verifyInput": "Verification code",
+    "verifySuccessMessage": "Your account has been successfully verified!",
+    "nextButton": "next",
+    "reloginMessage": "Please re-login"
+  }
+}
