@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { TextField, Button, CircularProgress, Typography, Checkbox, Link } from '@material-ui/core'
 import MaskedInput from 'react-text-mask'
+import { Redirect } from 'react-router-dom'
 import { t } from '../../utils/translate'
 import { emailIsValid } from '../../utils/emailRegex'
 
@@ -27,7 +28,7 @@ class Signup extends Component {
   }
 
   onSubmit = () => {
-    const { email, password, submit, validateFields } = this.props
+    const { email, password, submit, validateFields, pPolicyChecked } = this.props
     if (email.length < 1) {
       validateFields({ field: 'email', errorText: t('fieldRequired') })
     } else if (!emailIsValid(email)) {
@@ -35,7 +36,7 @@ class Signup extends Component {
     } else if (password.length < 1) {
       validateFields({ field: 'password', errorText: t('fieldRequired') })
     } else {
-      submit()
+      pPolicyChecked && submit()
     }
   }
 
@@ -51,6 +52,7 @@ class Signup extends Component {
       validate,
       changeField,
       toogleCheckbox,
+      success,
     } = this.props
     return (
       <div className="card">
@@ -109,7 +111,12 @@ class Signup extends Component {
             </Button>
           )}
         </div>
-        {error && <Typography color="error">{errorText}</Typography>}
+        {error && (
+          <Typography color="error" style={{ textTransform: 'capitalize' }}>
+            {errorText}
+          </Typography>
+        )}
+        {success && <Redirect to="/verify" />}
       </div>
     )
   }

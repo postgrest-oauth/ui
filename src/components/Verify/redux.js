@@ -23,8 +23,15 @@ export default createReducer(
       validateError: false,
       validateText: '',
     }),
-    [submit.request]: state => ({ ...state, inProgress: true, error: false, errorText: null }),
-    [submit.failure]: (state, payload) => ({ ...state, inProgress: false, error: true, errorText: payload.error }),
+    [submit.request]: state => ({ ...state, inProgress: true, error: false, errorText: null, success: false }),
+    [submit.failure]: (state, payload) => ({
+      ...state,
+      inProgress: false,
+      error: true,
+      errorText: payload,
+      success: false,
+    }),
+    [submit.success]: state => ({ ...state, inProgress: false, error: false, errorText: null, success: true }),
     [validateField]: (state, payload) => ({ ...state, validateError: true, validateText: payload }),
   },
   defaultState

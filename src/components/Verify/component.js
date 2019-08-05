@@ -3,9 +3,12 @@ import { TextField, Button, CircularProgress, Typography } from '@material-ui/co
 import { t } from '../../utils/translate'
 
 class Verify extends Component {
-  componentDidMount() {
+  async componentDidMount() {
     const { code } = this.props.match.params
-    !!code && this.props.changeField(code)
+    if (!!code) {
+      await this.props.changeField(code)
+      this.onSubmit()
+    }
   }
 
   onSubmit = () => {
@@ -49,10 +52,15 @@ class Verify extends Component {
             error={validateError}
             helperText={validateError && validateText}
             onKeyDown={e => e.keyCode === 13 && this.onSubmit()}
+            type="number"
           />
         )}
         <div className="button-container">{inProgress ? <CircularProgress size={40} /> : this.renderButton()}</div>
-        {error && <Typography color="error">{errorText}</Typography>}
+        {error && (
+          <Typography color="error" style={{ textTransform: 'capitalize' }}>
+            {errorText}
+          </Typography>
+        )}
       </div>
     )
   }

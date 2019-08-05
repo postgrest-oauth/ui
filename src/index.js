@@ -18,7 +18,7 @@ const composeEnhancers =
       : compose
     : compose
 export const store = createStore(rootReducer, initialState, composeEnhancers(applyMiddleware(...[sagaMW])))
-// sagaMW.run(rootSaga)
+sagaMW.run(rootSaga)
 
 ReactDOM.render(<App store={store} />, document.getElementById('root'))
 

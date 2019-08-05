@@ -12,6 +12,7 @@ export default connect(
     errorText: state.signup.errorText,
     inProgress: state.signup.inProgress,
     validate: state.signup.validate,
+    success: state.signup.success,
   }),
   {
     changeField: actions.changeField,

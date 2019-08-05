@@ -18,6 +18,7 @@
     "verifyInput": "Verification code",
     "verifySuccessMessage": "Your account has been successfully verified!",
     "nextButton": "next",
-    "reloginMessage": "Please re-login"
+    "reloginMessage": "Please re-login",
+    "generalError": "Something bad happened"
   }
 }
