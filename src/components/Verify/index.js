@@ -11,7 +11,7 @@ export default connect(
     validateError: state.verify.validateError,
     validateText: state.verify.validateText,
     success: state.verify.success,
-    redirect_uri: state.settings.params.redirect_uri,
+    redirect_uri: state.settings.redirect_uri,
   }),
   {
     changeField: actions.changeField,

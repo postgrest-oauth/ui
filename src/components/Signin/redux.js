@@ -11,7 +11,6 @@ const defaultState = {
     field: null,
     errorText: null,
   },
-  success: false,
 }
 
 const changeField = createAction('SIGNIN_CHANGE_FIELD')
@@ -29,15 +28,14 @@ export default createReducer(
         errorText: null,
       },
     }),
-    [submit.request]: state => ({ ...state, inProgress: true, error: false, errorText: null, success: false }),
+    [submit.request]: state => ({ ...state, inProgress: true, error: false, errorText: null }),
     [submit.failure]: (state, payload) => ({
       ...state,
       inProgress: false,
       error: true,
       errorText: payload,
-      success: false,
     }),
-    [submit.success]: state => ({ ...state, inProgress: false, error: false, errorText: null, success: true }),
+    [submit.success]: state => ({ ...state, inProgress: false, error: false, errorText: null }),
     [validateFields]: (state, payload) => ({ ...state, validate: payload }),
     [cleanup]: () => defaultState,
   },

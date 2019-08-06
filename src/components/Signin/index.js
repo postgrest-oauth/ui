@@ -10,7 +10,6 @@ export default connect(
     errorText: state.signin.errorText,
     validate: state.signin.validate,
     inProgress: state.signin.inProgress,
-    success: state.signin.success,
   }),
   {
     changeField: actions.changeField,
