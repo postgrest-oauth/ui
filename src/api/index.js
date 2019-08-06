@@ -17,4 +17,8 @@ export default {
     let body = `code=${data.code}`
     return instance.post('/verify', body)
   },
+  reverify: data => {
+    let body = `username=${encodeURIComponent(data.username)}`
+    return instance.post('/re-verify', body)
+  },
 }

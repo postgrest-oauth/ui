@@ -62,10 +62,10 @@ class Signin extends Component {
             {errorText}
           </Typography>
         )}
-        <Link component={RouterLink} to="/">
+        <Link component={RouterLink} to="/password/request">
           {t('passwordResetLink')}
         </Link>
-        <Link component={RouterLink} to="/">
+        <Link component={RouterLink} to="/re-verify">
           {t('reVerifyLink')}
         </Link>
       </div>
