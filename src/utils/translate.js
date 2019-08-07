@@ -1,10 +1,10 @@
 import strings from '../static/strings.json'
 
-let lng = 'en'
-
-export const setLng = lang => {
+export const t = key => {
+  let lng = navigator.language.slice(0, 2)
   const array = Object.keys(strings)
-  array.includes(lang) ? (lng = lang) : (lng = 'en')
+  if (!array.includes(lng)) {
+    lng = 'en'
+  }
+  return strings[lng][key]
 }
-
-export const t = key => strings[lng][key]
