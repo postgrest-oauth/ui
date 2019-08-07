@@ -19,6 +19,7 @@
     "verifySuccessMessage": "Your account has been successfully verified!",
     "nextButton": "next",
     "reloginMessage": "Please re-login",
-    "generalError": "Something bad happened"
+    "generalError": "Something bad happened",
+    "newPasswordInput": "New password"
   }
 }

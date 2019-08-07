@@ -21,4 +21,12 @@ export default {
     let body = `username=${encodeURIComponent(data.username)}`
     return instance.post('/re-verify', body)
   },
+  passwordRequest: data => {
+    let body = `username=${encodeURIComponent(data.username)}`
+    return instance.post('/password/request', body)
+  },
+  passwordReset: data => {
+    let body = `code=${data.code}&password=${encodeURIComponent(data.password)}`
+    return instance.post('/password/reset', body)
+  },
 }

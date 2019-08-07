@@ -4,7 +4,8 @@ import { Container, Box } from '@material-ui/core'
 
 import Login from '../components/Login'
 import Verify from '../components/Verify'
-import Reverify from '../components/Reverify'
+import EmailForm from '../components/EmailForm'
+import ResetPassword from '../components/ResetPassword'
 
 const Router = () => (
   <div className="main-container">
@@ -14,8 +15,9 @@ const Router = () => (
           <Switch>
             <Route exact path="/" component={Login} />
             <Route path="/verify/:code?" component={Verify} />
-            <Route exact path="/re-verify" component={Reverify} />
-            <Route exact path="/password/request" component={Reverify} />
+            <Route path="/re-verify/:username?" component={EmailForm} />
+            <Route path="/password/request/:username?" component={EmailForm} />
+            <Route path="/password/reset/:code?" component={ResetPassword} />
           </Switch>
         </BrowserRouter>
       </Box>

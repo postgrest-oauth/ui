@@ -4,10 +4,11 @@ import api from '../../api'
 import { actions } from './redux'
 import { t } from '../../utils/translate'
 
-function* reverify() {
+function* submit() {
   try {
-    const { username } = yield select(state => state.reverify)
-    yield call(api.reverify, { username: username.replace(/\s/g, '') })
+    const { username, variant } = yield select(state => state.emailForm)
+    const request = variant === 'verify' ? api.reverify : api.passwordRequest
+    yield call(request, { username: username.replace(/\s/g, '') })
     yield put(actions.submit.success())
   } catch (err) {
     console.log(err)
@@ -16,4 +17,4 @@ function* reverify() {
   }
 }
 
-export default [takeLatest(actions.submit.request, reverify)]
+export default [takeLatest(actions.submit.request, submit)]

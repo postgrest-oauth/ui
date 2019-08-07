@@ -3,9 +3,15 @@ import { TextField, Button, CircularProgress, Typography } from '@material-ui/co
 import { Redirect } from 'react-router-dom'
 import { t } from '../../utils/translate'
 
-class Reverify extends Component {
-  componentDidMount() {
-    console.log(this.props)
+class EmailForm extends Component {
+  async componentDidMount() {
+    const { path, params } = this.props.match
+    const { setVariant, changeField } = this.props
+    path.includes('verify') ? await setVariant('verify') : await setVariant('password')
+    if (!!params.username) {
+      await changeField(params.username)
+      this.onSubmit()
+    }
   }
 
   onSubmit = () => {
@@ -17,7 +23,17 @@ class Reverify extends Component {
     }
   }
   render() {
-    const { username, error, inProgress, changeField, errorText, validateError, validateText, success } = this.props
+    const {
+      username,
+      error,
+      inProgress,
+      changeField,
+      errorText,
+      validateError,
+      validateText,
+      success,
+      variant,
+    } = this.props
     return (
       <div className="card">
         <TextField
@@ -46,10 +62,10 @@ class Reverify extends Component {
             {errorText}
           </Typography>
         )}
-        {success && <Redirect to="/verify" />}
+        {success && <Redirect to={variant === 'verify' ? '/verify' : '/password/reset'} />}
       </div>
     )
   }
 }
 
-export default Reverify
+export default EmailForm

@@ -9,11 +9,13 @@ const defaultState = {
   validateError: false,
   validateText: '',
   success: false,
+  variant: null, // variant must be 'verify' or 'password'
 }
 
-const changeField = createAction('REVERIFY_CHANGE_FIELD')
-const submit = createActions('REVERIFY_SUBMIT')
-const validateField = createAction('REVERIFY_VALIDATE')
+const changeField = createAction('EMAILFORM_CHANGE_FIELD')
+const submit = createActions('EMAILFORM_SUBMIT')
+const validateField = createAction('EMAILFORM_VALIDATE')
+const setVariant = createAction('EMAILFORM_SET_VARIANT')
 
 export default createReducer(
   {
@@ -33,8 +35,9 @@ export default createReducer(
     }),
     [submit.success]: state => ({ ...state, inProgress: false, error: false, errorText: null, success: true }),
     [validateField]: (state, payload) => ({ ...state, validateError: true, validateText: payload }),
+    [setVariant]: (state, payload) => ({ ...state, variant: payload }),
   },
   defaultState
 )
 
-export const actions = { changeField, submit, validateField }
+export const actions = { changeField, submit, validateField, setVariant }
