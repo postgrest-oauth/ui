@@ -6,6 +6,7 @@ import Login from '../components/Login'
 import Verify from '../components/Verify'
 import EmailForm from '../components/EmailForm'
 import ResetPassword from '../components/ResetPassword'
+import NotFound from '../components/NotFound'
 
 const Router = () => (
   <div className="main-container">
@@ -18,6 +19,7 @@ const Router = () => (
             <Route path="/re-verify/:username?" component={EmailForm} />
             <Route path="/password/request/:username?" component={EmailForm} />
             <Route path="/password/reset/:code?" component={ResetPassword} />
+            <Route component={NotFound} />
           </Switch>
         </BrowserRouter>
       </Box>

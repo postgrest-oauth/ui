@@ -19,46 +19,61 @@ class ResetPassword extends Component {
     }
   }
 
+  renderButton = () => {
+    const { success, redirect_uri } = this.props
+    if (!success) {
+      return (
+        <Button variant="contained" color="primary" size="large" onClick={this.onSubmit}>
+          {t('submitButton')}
+        </Button>
+      )
+    } else if (success && !!redirect_uri) {
+      return (
+        <Button variant="contained" color="primary" size="large" onClick={() => this.props.history.push('/')}>
+          {t('nextButton')}
+        </Button>
+      )
+    } else if (success && !redirect_uri) {
+      return <Typography color="primary">{t('reloginMessage')}</Typography>
+    }
+  }
+
   render() {
     const { code, password, error, inProgress, changeField, errorText, validate, success } = this.props
     return (
       <div className="card">
-        <Typography color="primary">{t('verifyText')}</Typography>
-        <TextField
-          label={t('verifyInput')}
-          variant="outlined"
-          value={code}
-          onChange={e => changeField({ field: 'code', value: e.target.value })}
-          margin="normal"
-          fullWidth={true}
-          required={true}
-          error={validate.field === 'code'}
-          helperText={validate.field === 'code' && validate.errorText}
-          onKeyDown={e => e.keyCode === 13 && this.onSubmit()}
-          type="number"
-        />
-        <TextField
-          label={t('newPasswordInput')}
-          variant="outlined"
-          value={password}
-          onChange={e => changeField({ field: 'password', value: e.target.value })}
-          margin="normal"
-          fullWidth={true}
-          type="password"
-          required={true}
-          error={validate.field === 'password'}
-          helperText={validate.field === 'password' && validate.errorText}
-          onKeyDown={e => e.keyCode === 13 && this.onSubmit()}
-        />
-        <div className="button-container">
-          {inProgress ? (
-            <CircularProgress size={40} />
-          ) : (
-            <Button variant="contained" color="primary" size="large" onClick={this.onSubmit}>
-              {t('submitButton')}
-            </Button>
-          )}
-        </div>
+        <Typography color="primary">{!success ? t('verifyText') : t('passwordSuccessMessage')}</Typography>
+        {!success && (
+          <React.Fragment>
+            <TextField
+              label={t('verifyInput')}
+              variant="outlined"
+              value={code}
+              onChange={e => changeField({ field: 'code', value: e.target.value })}
+              margin="normal"
+              fullWidth={true}
+              required={true}
+              error={validate.field === 'code'}
+              helperText={validate.field === 'code' && validate.errorText}
+              onKeyDown={e => e.keyCode === 13 && this.onSubmit()}
+              type="number"
+            />
+            <TextField
+              label={t('newPasswordInput')}
+              variant="outlined"
+              value={password}
+              onChange={e => changeField({ field: 'password', value: e.target.value })}
+              margin="normal"
+              fullWidth={true}
+              type="password"
+              required={true}
+              error={validate.field === 'password'}
+              helperText={validate.field === 'password' && validate.errorText}
+              onKeyDown={e => e.keyCode === 13 && this.onSubmit()}
+            />
+          </React.Fragment>
+        )}
+        <div className="button-container">{inProgress ? <CircularProgress size={40} /> : this.renderButton()}</div>
         {error && (
           <Typography color="error" style={{ textTransform: 'capitalize' }}>
             {errorText}

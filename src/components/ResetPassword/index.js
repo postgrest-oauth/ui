@@ -11,6 +11,7 @@ export default connect(
     validate: state.resetPassword.validate,
     inProgress: state.resetPassword.inProgress,
     success: state.resetPassword.success,
+    redirect_uri: state.settings.redirect_uri,
   }),
   {
     changeField: actions.changeField,

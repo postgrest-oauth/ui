@@ -17,9 +17,11 @@
     "verifyText": "Please input verification code from email",
     "verifyInput": "Verification code",
     "verifySuccessMessage": "Your account has been successfully verified!",
+    "passwordSuccessMessage": "Your password has been successfully updated!",
     "nextButton": "next",
     "reloginMessage": "Please re-login",
     "generalError": "Something bad happened",
-    "newPasswordInput": "New password"
+    "newPasswordInput": "New password",
+    "notFound": "Not Found :("
   }
 }
