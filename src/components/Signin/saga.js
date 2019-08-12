@@ -2,7 +2,6 @@ import { takeLatest, put, call, select } from 'redux-saga/effects'
 
 import api from '../../api'
 import { actions } from './redux'
-import { t } from '../../utils/translate'
 
 function* signin() {
   try {
@@ -16,7 +15,7 @@ function* signin() {
     yield window.location.assign(`${process.env.REACT_APP_OAUTH_API_URL}/authorize${search}`)
   } catch (err) {
     console.log(err)
-    const message = err.response ? err.response.data.message : t('generalError')
+    const message = err.response ? err.response.data.message : null
     yield put(actions.submit.failure(message))
   }
 }

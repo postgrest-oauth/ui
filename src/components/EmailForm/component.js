@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { TextField, Button, CircularProgress, Typography } from '@material-ui/core'
 import { Redirect } from 'react-router-dom'
-import { t } from '../../utils/translate'
+import withTranslation from '../../services/withTranslation'
 
 class EmailForm extends Component {
   async componentDidMount() {
@@ -15,7 +15,7 @@ class EmailForm extends Component {
   }
 
   onSubmit = () => {
-    const { username, submit, validateFields } = this.props
+    const { t, username, submit, validateFields } = this.props
     if (username.length < 1) {
       validateFields({ field: 'username', errorText: t('fieldRequired') })
     } else {
@@ -24,6 +24,7 @@ class EmailForm extends Component {
   }
   render() {
     const {
+      t,
       username,
       error,
       inProgress,
@@ -59,7 +60,7 @@ class EmailForm extends Component {
         </div>
         {error && (
           <Typography color="error" style={{ textTransform: 'capitalize' }}>
-            {errorText}
+            {errorText ? errorText : t('generalError')}
           </Typography>
         )}
         {success && <Redirect to={variant === 'verify' ? '/verify' : '/password/reset'} />}
@@ -68,4 +69,4 @@ class EmailForm extends Component {
   }
 }
 
-export default EmailForm
+export default withTranslation(EmailForm)

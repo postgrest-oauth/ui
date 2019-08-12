@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { TextField, Button, CircularProgress, Link, Typography } from '@material-ui/core'
 import { Link as RouterLink } from 'react-router-dom'
-import { t } from '../../utils/translate'
+import withTranslation from '../../services/withTranslation'
 
 class Signin extends Component {
   componentWillUnmount() {
@@ -9,7 +9,7 @@ class Signin extends Component {
   }
 
   onSubmit = () => {
-    const { username, password, submit, validateFields } = this.props
+    const { t, username, password, submit, validateFields } = this.props
     if (username.length < 1) {
       validateFields({ field: 'username', errorText: t('fieldRequired') })
     } else if (password.length < 1) {
@@ -20,7 +20,7 @@ class Signin extends Component {
   }
 
   render() {
-    const { username, password, error, inProgress, changeField, errorText, validate } = this.props
+    const { t, username, password, error, inProgress, changeField, errorText, validate } = this.props
     return (
       <div className="card">
         <TextField
@@ -59,7 +59,7 @@ class Signin extends Component {
         </div>
         {error && (
           <Typography color="error" style={{ textTransform: 'capitalize' }}>
-            {errorText}
+            {errorText ? errorText : t('generalError')}
           </Typography>
         )}
         <Link component={RouterLink} to="/password/request">
@@ -73,4 +73,4 @@ class Signin extends Component {
   }
 }
 
-export default Signin
+export default withTranslation(Signin)

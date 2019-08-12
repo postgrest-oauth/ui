@@ -2,11 +2,14 @@ import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import Router from './Router'
 import queryString from 'query-string'
+import { ThemeProvider } from '@material-ui/styles'
 import { actions as settingsActions } from '../services/settingsReducer'
-import { t } from '../utils/translate'
+import withTranslation from '../services/withTranslation'
+import { theme, env } from '../static/muiTheme'
 
 class App extends Component {
   componentDidMount() {
+    document.body.style.backgroundColor = env.type === 'light' ? '#fff' : '#212121'
     const params = queryString.parse(window.location.search)
     const { search } = window.location
     const { store } = this.props
@@ -17,16 +20,18 @@ class App extends Component {
           search: search,
         })
       )
-    document.title = t('documentTitle')
+    document.title = this.props.t('documentTitle')
   }
 
   render() {
     return (
       <Provider store={this.props.store}>
-        <Router />
+        <ThemeProvider theme={theme}>
+          <Router />
+        </ThemeProvider>
       </Provider>
     )
   }
 }
 
-export default App
+export default withTranslation(App)

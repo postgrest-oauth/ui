@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { Container, Box } from '@material-ui/core'
+import { env } from '../static/muiTheme'
 
 import Login from '../components/Login'
 import Verify from '../components/Verify'
@@ -10,8 +11,8 @@ import NotFound from '../components/NotFound'
 
 const Router = () => (
   <div className="main-container">
-    <Container maxWidth="xs">
-      <Box boxShadow={1}>
+    <Container maxWidth="sm" style={{ backgroundColor: env.type === 'light' ? '#fff' : '#333333' }}>
+      <Box boxShadow={env.type === 'light' ? 1 : 0}>
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={Login} />

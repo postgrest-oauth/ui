@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { TextField, Button, CircularProgress, Typography, Checkbox, Link } from '@material-ui/core'
 import MaskedInput from 'react-text-mask'
 import { Redirect } from 'react-router-dom'
-import { t } from '../../utils/translate'
+import withTranslation from '../../services/withTranslation'
 import { emailIsValid } from '../../utils/emailRegex'
 
 const TextMask = props => {
@@ -28,7 +28,7 @@ class Signup extends Component {
   }
 
   onSubmit = () => {
-    const { email, password, submit, validateFields, pPolicyChecked } = this.props
+    const { t, email, password, submit, validateFields, pPolicyChecked } = this.props
     if (email.length < 1) {
       validateFields({ field: 'email', errorText: t('fieldRequired') })
     } else if (!emailIsValid(email)) {
@@ -42,6 +42,7 @@ class Signup extends Component {
 
   render() {
     const {
+      t,
       email,
       password,
       phone,
@@ -98,7 +99,7 @@ class Signup extends Component {
         />
         <div className="privacy-policy-link-container">
           <Checkbox checked={pPolicyChecked} onChange={toogleCheckbox} />
-          <Typography>{t('checkboxLabel')}</Typography>
+          <Typography color="textPrimary">{t('checkboxLabel')}</Typography>
           {'\u00A0'}
           <Link href={process.env.REACT_APP_PRIVACY_POLICY_URL}>{t('privacyPolicyLink')}</Link>
         </div>
@@ -113,7 +114,7 @@ class Signup extends Component {
         </div>
         {error && (
           <Typography color="error" style={{ textTransform: 'capitalize' }}>
-            {errorText}
+            {errorText ? errorText : t('generalError')}
           </Typography>
         )}
         {success && <Redirect to="/verify" />}
@@ -122,4 +123,4 @@ class Signup extends Component {
   }
 }
 
-export default Signup
+export default withTranslation(Signup)

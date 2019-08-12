@@ -1,21 +1,21 @@
 import React from 'react'
 import { AppBar, Tabs, Tab } from '@material-ui/core'
 
-import { t } from '../../utils/translate'
+import withTranslation from '../../services/withTranslation'
 import Signin from '../Signin'
 import Signup from '../Signup'
 
-const Login = () => {
+const Login = props => {
   const [value, setValue] = React.useState(0)
 
   function handleChange(event, newValue) {
     setValue(newValue)
   }
-
+  const { t } = props
   return (
     <div>
       <AppBar position="static">
-        <Tabs value={value} onChange={handleChange} centered>
+        <Tabs value={value} onChange={handleChange} variant="fullWidth" centered={true}>
           <Tab label={t('signInTab')} />
           <Tab label={t('signUpTab')} />
         </Tabs>
@@ -26,4 +26,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default withTranslation(Login)

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { TextField, Button, CircularProgress, Typography } from '@material-ui/core'
-import { t } from '../../utils/translate'
+import withTranslation from '../../services/withTranslation'
 
 class ResetPassword extends Component {
   componentDidMount() {
@@ -9,7 +9,7 @@ class ResetPassword extends Component {
   }
 
   onSubmit = () => {
-    const { code, password, submit, validateFields } = this.props
+    const { t, code, password, submit, validateFields } = this.props
     if (code.length < 1) {
       validateFields({ field: 'code', errorText: t('fieldRequired') })
     } else if (password.length < 1) {
@@ -20,7 +20,7 @@ class ResetPassword extends Component {
   }
 
   renderButton = () => {
-    const { success, redirect_uri } = this.props
+    const { t, success, redirect_uri } = this.props
     if (!success) {
       return (
         <Button variant="contained" color="primary" size="large" onClick={this.onSubmit}>
@@ -39,7 +39,7 @@ class ResetPassword extends Component {
   }
 
   render() {
-    const { code, password, error, inProgress, changeField, errorText, validate, success } = this.props
+    const { t, code, password, error, inProgress, changeField, errorText, validate, success } = this.props
     return (
       <div className="card">
         <Typography color="primary">{!success ? t('verifyText') : t('passwordSuccessMessage')}</Typography>
@@ -76,7 +76,7 @@ class ResetPassword extends Component {
         <div className="button-container">{inProgress ? <CircularProgress size={40} /> : this.renderButton()}</div>
         {error && (
           <Typography color="error" style={{ textTransform: 'capitalize' }}>
-            {errorText}
+            {errorText ? errorText : t('generalError')}
           </Typography>
         )}
       </div>
@@ -84,4 +84,4 @@ class ResetPassword extends Component {
   }
 }
 
-export default ResetPassword
+export default withTranslation(ResetPassword)
