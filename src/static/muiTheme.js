@@ -4,9 +4,9 @@ export const env = {
   primary: process.env.REACT_APP_PRIMARY_COLOR || '#3f51b5',
   secondary: process.env.REACT_APP_SECONDARY_COLOR || '#f50057',
   error: process.env.REACT_APP_ERROR_COLOR || '#f44336',
-  type: process.env.REACT_APP_TYPE || 'light',
+  type: process.env.REACT_APP_USE_DARK ? 'dark' : 'light',
   fontSize: process.env.REACT_APP_FONT_SIZE || 14,
-  systemFont: process.env.REACT_APP_SYSTEM_FONT
+  systemFont: process.env.REACT_APP_USE_SYSTEM_FONT
     ? [
         '-apple-system',
         'BlinkMacSystemFont',

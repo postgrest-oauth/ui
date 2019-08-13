@@ -11,7 +11,7 @@ import NotFound from '../components/NotFound'
 
 const Router = () => (
   <div className="main-container">
-    <Container maxWidth="sm" style={{ backgroundColor: env.type === 'light' ? '#fff' : '#333333' }}>
+    <Container maxWidth="sm" style={{ backgroundColor: process.env.REACT_APP_USE_DARK ? '#333333' : '#fff' }}>
       <Box boxShadow={env.type === 'light' ? 1 : 0}>
         <BrowserRouter>
           <Switch>

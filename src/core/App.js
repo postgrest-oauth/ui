@@ -9,7 +9,7 @@ import { theme, env } from '../static/muiTheme'
 
 class App extends Component {
   componentDidMount() {
-    document.body.style.backgroundColor = env.type === 'light' ? '#fff' : '#212121'
+    document.body.style.backgroundColor = process.env.REACT_APP_USE_DARK ? '#212121' : '#fff'
     const params = queryString.parse(window.location.search)
     const { search } = window.location
     const { store } = this.props
