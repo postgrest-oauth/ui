@@ -22,7 +22,7 @@ REACT_APP_PRIVACY_POLICY_URL=http://localhost:3625
 You can change primary, secondary and error colors, to change them you need to pass some variables.  
 Example:
 
-```js
+```bash
 REACT_APP_PRIMARY_COLOR=#3f51b5
 REACT_APP_SECONDARY_COLOR=#f50057
 REACT_APP_ERROR_COLOR=#f44336
