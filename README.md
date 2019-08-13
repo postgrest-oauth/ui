@@ -39,7 +39,7 @@ Default font is Roboto, you can use system fonts instead, pass `REACT_APP_USE_SY
 ## Localisation
 
 By default, Oauth-ui will try to guess browsers language and use it for localisation.   
-Library has translation for English, Ukrainian and Russian language, if browsers language is different, English will be used as default.
+Library has translation for English, Ukrainian and Russian languages, if browsers language is different, English will be used as default.
 
 If you want to add more languages to the library, follow this steps:
 
