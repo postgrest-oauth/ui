@@ -58,11 +58,7 @@ class EmailForm extends Component {
             </Button>
           )}
         </div>
-        {error && (
-          <Typography color="error" style={{ textTransform: 'capitalize' }}>
-            {errorText ? errorText : t('generalError')}
-          </Typography>
-        )}
+        {error && <Typography color="error">{errorText ? errorText : t('generalError')}</Typography>}
         {success && <Redirect to={variant === 'verify' ? '/verify' : '/password/reset'} />}
       </div>
     )

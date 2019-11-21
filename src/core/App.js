@@ -5,7 +5,7 @@ import queryString from 'query-string'
 import { ThemeProvider } from '@material-ui/styles'
 import { actions as settingsActions } from '../services/settingsReducer'
 import withTranslation from '../services/withTranslation'
-import { theme, env } from '../static/muiTheme'
+import { theme } from '../static/muiTheme'
 
 class App extends Component {
   componentDidMount() {

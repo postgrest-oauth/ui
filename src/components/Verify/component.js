@@ -66,11 +66,7 @@ class Verify extends Component {
           />
         )}
         <div className="button-container">{inProgress ? <CircularProgress size={40} /> : this.renderButton()}</div>
-        {error && (
-          <Typography color="error" style={{ textTransform: 'capitalize' }}>
-            {errorText ? errorText : t('generalError')}
-          </Typography>
-        )}
+        {error && <Typography color="error">{errorText ? errorText : t('generalError')}</Typography>}
       </div>
     )
   }

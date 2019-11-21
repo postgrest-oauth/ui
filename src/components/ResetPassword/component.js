@@ -74,11 +74,7 @@ class ResetPassword extends Component {
           </React.Fragment>
         )}
         <div className="button-container">{inProgress ? <CircularProgress size={40} /> : this.renderButton()}</div>
-        {error && (
-          <Typography color="error" style={{ textTransform: 'capitalize' }}>
-            {errorText ? errorText : t('generalError')}
-          </Typography>
-        )}
+        {error && <Typography color="error">{errorText ? errorText : t('generalError')}</Typography>}
       </div>
     )
   }

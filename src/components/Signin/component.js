@@ -57,11 +57,7 @@ class Signin extends Component {
             </Button>
           )}
         </div>
-        {error && (
-          <Typography color="error" style={{ textTransform: 'capitalize' }}>
-            {errorText ? errorText : t('generalError')}
-          </Typography>
-        )}
+        {error && <Typography color="error">{errorText ? errorText : t('generalError')}</Typography>}
         <Link component={RouterLink} to="/password/request">
           {t('passwordResetLink')}
         </Link>
