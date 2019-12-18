@@ -28,12 +28,14 @@ const withTranslation = WrappedComponent => {
 
     setLangFromNavigator = () => {
       const defaultLang = process.env.REACT_APP_DEFAULT_LANG
-      const array = Object.keys(this.state.translations)
-      if (defaultLang) {
-        this.setState({ lang: array.includes(defaultLang) ? defaultLang : 'en' })
-      } else {
-        let lng = navigator.language.slice(0, 2)
-        this.setState({ lang: array.includes(lng) ? lng : 'en' })
+      if (this.state.translations) {
+        const array = Object.keys(this.state.translations)
+        if (defaultLang) {
+          this.setState({ lang: array.includes(defaultLang) ? defaultLang : 'en' })
+        } else {
+          let lng = navigator.language.slice(0, 2)
+          this.setState({ lang: array.includes(lng) ? lng : 'en' })
+        }
       }
     }
 

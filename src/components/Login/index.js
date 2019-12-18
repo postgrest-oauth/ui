@@ -7,23 +7,52 @@ import Signup from '../Signup'
 
 const Login = props => {
   const [value, setValue] = React.useState(0)
+  const { t } = props
 
-  function handleChange(event, newValue) {
+  const renderTabs = () => {
+    if (process.env.REACT_APP_SIGNUP_ONLY) {
+      return (
+        <>
+          <AppBar position="static">
+            <Tabs value={value} onChange={handleChange} variant="fullWidth" centered={true}>
+              <Tab label={t('signUpTab')} />
+            </Tabs>
+          </AppBar>
+          <Signup />
+        </>
+      )
+    } else if (process.env.REACT_APP_SIGNIN_ONLY) {
+      return (
+        <>
+          <AppBar position="static">
+            <Tabs value={value} onChange={handleChange} variant="fullWidth" centered={true}>
+              <Tab label={t('signInTab')} />
+            </Tabs>
+          </AppBar>
+          <Signin />
+        </>
+      )
+    } else if (!process.env.REACT_APP_SIGNIN_ONLY && !process.env.REACT_APP_SIGNUP_ONLY) {
+      return (
+        <>
+          <AppBar position="static">
+            <Tabs value={value} onChange={handleChange} variant="fullWidth" centered={true}>
+              <Tab label={t('signInTab')} />
+              <Tab label={t('signUpTab')} />
+            </Tabs>
+          </AppBar>
+          {value === 0 && <Signin />}
+          {value === 1 && <Signup />}
+        </>
+      )
+    }
+  }
+
+  const handleChange = (event, newValue) => {
     setValue(newValue)
   }
-  const { t } = props
-  return (
-    <div>
-      <AppBar position="static">
-        <Tabs value={value} onChange={handleChange} variant="fullWidth" centered={true}>
-          <Tab label={t('signInTab')} />
-          <Tab label={t('signUpTab')} />
-        </Tabs>
-      </AppBar>
-      {value === 0 && <Signin />}
-      {value === 1 && <Signup />}
-    </div>
-  )
+
+  return <div>{renderTabs()}</div>
 }
 
 export default withTranslation(Login)

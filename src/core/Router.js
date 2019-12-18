@@ -15,7 +15,7 @@ const Router = () => (
       <Box boxShadow={env.type === 'light' ? 1 : 0}>
         <BrowserRouter>
           <Switch>
-            <Route exact path={['/', '/signin']} component={Login} />
+            <Route exact path={['/', '/signin', '/signup']} component={Login} />
             <Route exact path="/verify/:code?" component={Verify} />
             <Route exact path="/re-verify/:username?" component={EmailForm} />
             <Route exact path="/password/request/:username?" component={EmailForm} />
