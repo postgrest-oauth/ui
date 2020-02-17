@@ -22,4 +22,4 @@ sagaMW.run(rootSaga)
 
 ReactDOM.render(<App store={store} />, document.getElementById('root'))
 
-serviceWorker.register()
+serviceWorker.unregister()
