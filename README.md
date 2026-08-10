@@ -1,9 +1,14 @@
+OAuth UI
+========
+
 > [!IMPORTANT]
 > **This project is archived and is not maintained.** Do not use it for new projects.
 > For authentication in front of PostgREST, see the [PostgREST external authentication docs](https://docs.postgrest.org/en/stable/explanations/external_auth.html),
 > or use a maintained auth server such as [Supabase Auth](https://github.com/supabase/auth) or [Keycloak](https://www.keycloak.org/).
 
-:sunglasses: **ReactJS UI for [postgrest-oauth/api](https://github.com/postgrest-oauth/api), build with awesome [Material-UI](https://material-ui.com/)**
+A ready signin/signup frontend for [postgrest-oauth/api](https://github.com/postgrest-oauth/api), built with React and [Material-UI](https://material-ui.com/). It covers the whole account flow of the API: signup and signin with email or phone, verification code entry, re-verification and password reset.
+
+The app is configured only with environment variables, so one Docker image can serve different products without a rebuild: colors, dark theme, fonts, default language and privacy policy link are all set at container start. Translations for English, Ukrainian and Russian are included, and other languages can be added with a single JSON file (see [Localisation](#Localisation)).
 
 * [Usage](#Usage)
 * [Customization](#Customization)
